@@ -1,0 +1,1319 @@
+/* 
+   OmniStruX Core Design System
+   Sleek Dark Mode, Gemstone Accents, and Responsive Glassmorphic Panels
+   For: Stage 1 Online Ecosystem Funnel Rollout
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@100..900&display=swap');
+
+/* --- CSS Variables & Design Tokens --- */
+:root {
+    --bg-main: #07090c;
+    --bg-card: rgba(17, 19, 28, 0.65);
+    --bg-nav: rgba(9, 10, 15, 0.85);
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --border-color: rgba(255, 255, 255, 0.08);
+    
+    /* Font Families */
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    
+    /* Gemstone Accents (HSL) */
+    --gem-diamond: hsl(180, 75%, 55%);
+    --gem-diamond-glow: hsla(180, 75%, 55%, 0.15);
+    --gem-amethyst: hsl(280, 60%, 65%);
+    --gem-amethyst-glow: hsla(280, 60%, 65%, 0.15);
+    --gem-emerald: hsl(150, 65%, 55%);
+    --gem-emerald-glow: hsla(150, 65%, 55%, 0.15);
+    --gem-gold: hsl(45, 80%, 55%);
+    --gem-gold-glow: hsla(45, 80%, 55%, 0.15);
+    --gem-ruby: hsl(0, 75%, 55%);
+    --gem-ruby-glow: hsla(0, 75%, 55%, 0.15);
+
+    /* System Transition settings */
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- Base Resets & Global Styles --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-muted) var(--bg-main);
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* --- Layout Containers --- */
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+header {
+    background-color: var(--bg-nav);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 1rem 0;
+}
+
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.brand-symbol {
+    color: var(--gem-diamond);
+    font-size: 0.95rem;
+    animation: pulseGlow 3s infinite alternate ease-in-out;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.25rem;
+}
+
+nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    transition: var(--transition-smooth);
+    border: 1px solid transparent;
+}
+
+nav a:hover, nav a.active {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+nav a.active {
+    border-bottom: 1.5px solid var(--gem-diamond);
+    border-radius: 6px 6px 0 0;
+}
+
+main {
+    flex: 1;
+    padding: 2.5rem 0 4rem;
+}
+
+footer {
+    border-top: 1px solid var(--border-color);
+    background-color: rgba(6, 8, 11, 0.95);
+    padding: 2rem 0;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.signature-line {
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+}
+
+.signature-symbol {
+    color: var(--gem-diamond);
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text-primary);
+}
+
+h1 {
+    font-size: 2.5rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+}
+
+h2 {
+    font-size: 1.85rem;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.4rem;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 1.5px;
+    background-color: var(--gem-diamond);
+}
+
+h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+}
+
+p {
+    margin-bottom: 1.25rem;
+    color: var(--text-secondary);
+}
+
+strong {
+    color: var(--text-primary);
+}
+
+/* --- Particle Canvas --- */
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.25;
+}
+
+/* --- Navigation Views --- */
+.view {
+    display: none;
+    animation: fadeInView 0.5s ease-out forwards;
+}
+
+.view.active {
+    display: block;
+}
+
+/* --- Card Styles (Glassmorphism) --- */
+.card {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    transition: var(--transition-smooth);
+}
+
+.card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Form Fields & Buttons --- */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.4rem;
+}
+
+.form-control {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--gem-diamond);
+    box-shadow: 0 0 12px var(--gem-diamond-glow);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Select Elements */
+select.form-control {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1.25rem;
+    padding-right: 2.5rem;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: var(--transition-smooth);
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background-color: var(--gem-diamond);
+    color: #06080b;
+}
+
+.btn-primary:hover {
+    background-color: hsl(180, 85%, 65%);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.35);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+.btn-gofundme {
+    background-color: #00b964; /* GoFundMe Brand Green */
+    color: #ffffff;
+}
+
+.btn-gofundme:hover {
+    background-color: #00d272;
+    box-shadow: 0 0 15px rgba(0, 185, 100, 0.35);
+    transform: translateY(-1px);
+}
+
+.btn-group {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+/* --- Hero Section & Banner --- */
+.hero {
+    text-align: center;
+    padding: 2rem 0 3rem;
+}
+
+.hero-subtitle {
+    font-size: 1.15rem;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0.5rem auto 1.5rem;
+}
+
+.gemstone-accent-line {
+    width: 60px;
+    height: 2px;
+    margin: 1.5rem auto;
+    background: linear-gradient(90deg, var(--gem-diamond), var(--gem-amethyst), var(--gem-emerald));
+    border-radius: 1px;
+}
+
+/* --- Audio Player Card --- */
+.audio-player-card {
+    background: linear-gradient(135deg, rgba(18, 20, 28, 0.8), rgba(9, 10, 15, 0.9));
+    border-left: 3px solid var(--gem-diamond);
+}
+
+.audio-layout {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.audio-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.play-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--gem-diamond);
+    color: #06080b;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    transition: var(--transition-smooth);
+}
+
+.play-btn:hover {
+    background-color: hsl(180, 85%, 65%);
+    box-shadow: 0 0 12px var(--gem-diamond-glow);
+    transform: scale(1.05);
+}
+
+.audio-progress-container {
+    flex: 1;
+}
+
+.audio-progress-bar {
+    width: 100%;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+}
+
+.audio-progress-fill {
+    height: 100%;
+    background-color: var(--gem-diamond);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+.audio-time {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    min-width: 75px;
+    text-align: right;
+}
+
+/* --- Story Reading UI --- */
+.story-manuscript {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: #e5e7eb;
+    white-space: pre-line; /* preserves paragraph structures */
+}
+
+.story-section-title {
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    color: var(--gem-diamond);
+    margin: 2rem 0 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.25rem;
+}
+
+.story-bridge-panel {
+    background: linear-gradient(135deg, rgba(40, 30, 50, 0.4), rgba(15, 10, 20, 0.6));
+    border: 1px solid rgba(280, 60, 65, 0.2);
+    border-left: 3.5px solid var(--gem-amethyst);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2.5rem 0;
+    text-align: center;
+    font-style: italic;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: #e9d5ff;
+}
+
+.conversion-panel {
+    background: linear-gradient(135deg, rgba(16, 24, 20, 0.5), rgba(8, 12, 10, 0.7));
+    border: 1px solid rgba(150, 65, 55, 0.2);
+    border-top: 3px solid var(--gem-emerald);
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 3rem 0 1rem;
+    text-align: center;
+}
+
+.conversion-panel h3 {
+    color: var(--gem-emerald);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* --- Consent Checkbox Container --- */
+.consent-container {
+    background-color: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+}
+
+.checkbox-label input {
+    margin-top: 0.2rem;
+    accent-color: var(--gem-diamond);
+}
+
+/* --- Portfolio Dashboard View --- */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.portfolio-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.portfolio-card:hover {
+    transform: translateY(-2px);
+}
+
+.portfolio-card.active-gateway {
+    border-top: 3px solid var(--gem-amethyst);
+}
+
+.portfolio-card.core-gateway {
+    border-top: 3px solid var(--gem-diamond);
+}
+
+.portfolio-card.fundraiser-gateway {
+    border-top: 3px solid var(--gem-emerald);
+}
+
+.portfolio-tag {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+}
+
+.active-gateway .portfolio-tag {
+    color: var(--gem-amethyst);
+}
+
+.core-gateway .portfolio-tag {
+    color: var(--gem-diamond);
+}
+
+.fundraiser-gateway .portfolio-tag {
+    color: var(--gem-emerald);
+}
+
+/* --- Feedback Screen / Alert Box --- */
+.alert-box {
+    padding: 1.25rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 1px solid transparent;
+}
+
+.alert-success {
+    background-color: rgba(150, 65, 55, 0.08);
+    border-color: rgba(150, 65, 55, 0.25);
+    color: hsl(150, 60%, 80%);
+}
+
+.alert-info {
+    background-color: rgba(180, 75, 55, 0.08);
+    border-color: rgba(180, 75, 55, 0.25);
+    color: hsl(180, 70%, 85%);
+}
+
+.alert-warning {
+    background-color: rgba(45, 80, 55, 0.08);
+    border-color: rgba(45, 80, 55, 0.25);
+    color: hsl(45, 80%, 80%);
+}
+
+/* --- CSS Animations --- */
+@keyframes pulseGlow {
+    0% {
+        text-shadow: 0 0 5px var(--gem-diamond-glow);
+        opacity: 0.8;
+    }
+    100% {
+        text-shadow: 0 0 15px var(--gem-diamond);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInView {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Plus One Listing Wizard CSS --- */
+.wizard-steps-container {
+    position: relative;
+    margin: 2rem 0 3rem;
+    padding: 0 1rem;
+}
+
+.wizard-progress-line {
+    position: absolute;
+    top: 18px;
+    left: 2.5rem;
+    right: 2.5rem;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+.wizard-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gem-diamond), var(--gem-amethyst));
+    width: 12.5%;
+    transition: var(--transition-smooth);
+}
+
+.wizard-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+}
+
+.w-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: var(--transition-smooth);
+}
+
+.w-step.active, .w-step.completed {
+    opacity: 1;
+}
+
+.w-step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--bg-main);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    transition: var(--transition-smooth);
+}
+
+.w-step.active .w-step-num {
+    border-color: var(--gem-diamond);
+    box-shadow: 0 0 10px var(--gem-diamond-glow);
+    color: var(--gem-diamond);
+}
+
+.w-step.completed .w-step-num {
+    background-color: var(--gem-diamond);
+    border-color: var(--gem-diamond);
+    color: #06080b;
+}
+
+.w-step-label {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.w-step.active .w-step-label {
+    color: var(--text-primary);
+}
+
+.wizard-panel {
+    display: none;
+    animation: fadeInView 0.4s ease-out forwards;
+}
+
+.wizard-panel.active {
+    display: block;
+}
+
+/* Photo Capture UI */
+.photo-layout-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.camera-frame-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    background-color: #0c0e14;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.camera-overlay-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.grid-line {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.grid-v1 { left: 33.33%; top: 0; bottom: 0; width: 1px; }
+.grid-v2 { left: 66.66%; top: 0; bottom: 0; width: 1px; }
+.grid-h1 { top: 33.33%; left: 0; right: 0; height: 1px; }
+.grid-h2 { top: 66.66%; left: 0; right: 0; height: 1px; }
+
+.camera-outline-guide {
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    right: 20%;
+    bottom: 15%;
+    border: 2px dashed rgba(0, 255, 255, 0.4);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: var(--gem-diamond);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-shadow: 0 0 4px #000;
+    text-align: center;
+    pointer-events: none;
+}
+
+.camera-placeholder-graphic {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.camera-scan-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(180deg, transparent, var(--gem-diamond));
+    box-shadow: 0 0 10px var(--gem-diamond);
+    opacity: 0.8;
+    z-index: 4;
+    animation: scanPulse 2.5s infinite linear;
+}
+
+@keyframes scanPulse {
+    0% { top: 0%; }
+    50% { top: 100%; }
+    100% { top: 0%; }
+}
+
+/* Photo Ingestion Checklist */
+.photo-checklist-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.photo-checklist-card h4 {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.photo-checklist {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.chk-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: var(--transition-smooth);
+}
+
+.chk-dot {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.chk-item.active {
+    color: var(--gem-diamond);
+    font-weight: 600;
+}
+
+.chk-item.active .chk-dot {
+    color: var(--gem-diamond);
+    animation: blinkGlow 1.5s infinite alternate ease-in-out;
+}
+
+.chk-item.completed {
+    color: var(--gem-emerald);
+}
+
+.chk-item.completed .chk-dot {
+    color: var(--gem-emerald);
+}
+
+@keyframes blinkGlow {
+    0% { opacity: 0.4; text-shadow: 0 0 2px var(--gem-diamond-glow); }
+    100% { opacity: 1; text-shadow: 0 0 8px var(--gem-diamond); }
+}
+
+/* Agent CLI Panel */
+.agent-cli-panel {
+    background: linear-gradient(180deg, #090a0f 0%, #050608 100%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: monospace;
+    font-size: 0.85rem;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+}
+
+.agent-cli-header {
+    background-color: #111218;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.agent-cli-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--gem-diamond);
+    box-shadow: 0 0 6px var(--gem-diamond);
+}
+
+.agent-cli-title {
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: var(--text-secondary);
+}
+
+.agent-cli-body {
+    padding: 0.75rem;
+    height: 140px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    scroll-behavior: smooth;
+}
+
+.agent-cli-body p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+.log-info { color: #8892b0; }
+.log-warning { color: var(--gem-gold); }
+.log-success { color: var(--gem-emerald); }
+.log-error { color: var(--gem-ruby); }
+
+/* Captured Gallery */
+.captured-gallery {
+    display: flex;
+    gap: 0.75rem;
+    min-height: 90px;
+    background-color: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.75rem;
+    overflow-x: auto;
+}
+
+.gallery-empty-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.gallery-thumb-wrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1.5px solid var(--border-color);
+    background-color: #0c0e14;
+    flex-shrink: 0;
+}
+
+.gallery-thumb-wrapper.active {
+    border-color: var(--gem-diamond);
+    box-shadow: 0 0 8px var(--gem-diamond-glow);
+}
+
+.gallery-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-thumb-remove {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.6);
+    color: #fff;
+    border: none;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.gallery-thumb-remove:hover {
+    background-color: var(--gem-ruby);
+}
+
+.gallery-thumb-lbl {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.7);
+    color: #fff;
+    font-size: 0.6rem;
+    text-align: center;
+    padding: 1px 0;
+    font-weight: 500;
+}
+
+/* Marketplace Tabs & Output */
+.mkt-tabs-container {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    gap: 0.5rem;
+}
+
+.mkt-tab {
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    border-bottom: 2px solid transparent;
+    transition: var(--transition-smooth);
+    white-space: nowrap;
+}
+
+.mkt-tab:hover {
+    color: var(--text-primary);
+    background-color: rgba(255,255,255,0.02);
+}
+
+.mkt-tab.active {
+    color: var(--gem-diamond);
+    border-bottom-color: var(--gem-diamond);
+}
+
+.mkt-panel {
+    display: none;
+    animation: fadeInView 0.4s ease-out forwards;
+}
+
+.mkt-panel.active {
+    display: block;
+}
+
+.mkt-field-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.4rem;
+}
+
+.text-mono-edit {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    font-family: var(--font-body);
+}
+
+.item-specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.75rem;
+    background-color: rgba(255,255,255,0.01);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.spec-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    padding-bottom: 0.3rem;
+}
+
+.spec-lbl {
+    color: var(--text-muted);
+}
+
+.spec-val {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.mkt-financial-summary {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.financial-card {
+    flex: 1;
+    min-width: 150px;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.financial-lbl {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+}
+
+.financial-val {
+    font-size: 1.35rem;
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.text-red { color: var(--gem-ruby); }
+.text-green { color: var(--gem-emerald); }
+
+/* OAuth Sync & Daemon Publish */
+.oauth-section-card {
+    background-color: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.25rem;
+}
+
+.oauth-status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.oauth-status-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.oauth-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.oauth-indicator.red {
+    background-color: var(--gem-ruby);
+    box-shadow: 0 0 8px var(--gem-ruby-glow);
+}
+
+.oauth-indicator.green {
+    background-color: var(--gem-emerald);
+    box-shadow: 0 0 8px var(--gem-emerald-glow);
+}
+
+.console-daemon {
+    height: 220px;
+    background-color: #08050e;
+    color: #e9d5ff;
+}
+
+/* Modals layout */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInView 0.3s ease-out forwards;
+}
+
+.modal-content {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    color: #333;
+}
+
+.oauth-modal {
+    border-top: 6px solid #3665f3;
+}
+
+.oauth-modal-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.ebay-logo-font {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 2.2rem;
+    letter-spacing: -2px;
+}
+
+.ebay-logo-font span.e { color: #e53238; }
+.ebay-logo-font span.b { color: #0064d2; }
+.ebay-logo-font span.a { color: #f5af02; }
+.ebay-logo-font span.y { color: #86b817; }
+
+.oauth-modal-header h3 {
+    color: #333;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+    font-weight: 600;
+}
+
+.oauth-modal-body p {
+    color: #555;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.oauth-permissions-box {
+    background-color: #f7f7f7;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.oauth-permissions-box h5 {
+    margin: 0 0 0.5rem;
+    font-size: 0.85rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.oauth-permissions-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.oauth-permissions-box li {
+    font-size: 0.75rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* High Fidelity Live Preview Modal */
+.preview-modal {
+    max-width: 900px;
+    width: 95%;
+    padding: 1.5rem;
+    border-radius: 8px;
+    color: #333 !important;
+}
+
+.ebay-preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.ebay-specs-table {
+    margin-top: 0.5rem;
+}
+
+.ebay-specs-table tr {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.ebay-specs-table td {
+    padding: 0.4rem;
+    font-size: 0.8rem;
+}
+
+.ebay-specs-table td:first-child {
+    color: #777;
+    width: 40%;
+    font-weight: normal;
+}
+
+.ebay-specs-table td:last-child {
+    color: #333;
+    font-weight: bold;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.5rem;
+    }
+    nav ul {
+        gap: 0.5rem;
+    }
+    nav a {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.5rem;
+    }
+    .audio-layout {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    .audio-time {
+        text-align: left;
+    }
+}

@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walyalup Bridge — OmniStruX Rollout</title>
+    <meta name="description" content="A true account of survival, community, dignity, and a path toward decentralized systems of care in Fremantle.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background stars effect -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#/walyalup-bridge" class="brand">
+                <span class="brand-symbol">◆</span> OmniStruX
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#/walyalup-bridge" class="active">Story</a></li>
+                    <li><a href="#/kindness-fundraiser">Fundraiser</a></li>
+                    <li><a href="#/living-layers">Living Layers</a></li>
+                    <li><a href="#/timeshift-capture">TimeShiftAR</a></li>
+                    <li><a href="#/plus-one">Plus One</a></li>
+                    <li><a href="#/diamond-soul">Portfolio</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main View Display Container -->
+    <main class="container">
+        
+        <!-- View 1: Walyalup Bridge Story -->
+        <section id="walyalup-bridge" class="view active">
+            <div class="hero">
+                <h1>WALYALUP BRIDGE: A TURNING POINT</h1>
+                <p class="hero-subtitle">A true account of survival, community, dignity and what comes next.</p>
+                <div class="gemstone-accent-line"></div>
+                <div class="btn-group">
+                    <a href="#story-read" class="btn btn-primary">Read the Story</a>
+                    <a href="https://gofund.me/1431c79dd" target="_blank" class="btn btn-gofundme">Support Kindness Fundraiser</a>
+                </div>
+            </div>
+
+            <!-- Custom Audio player panel -->
+            <div class="card audio-player-card">
+                <h3>Listen to the Audio Reading</h3>
+                <p>Listen to the author read the Walyalup Bridge manuscript first-hand.</p>
+                <div class="audio-layout">
+                    <button id="play-btn" class="play-btn" aria-label="Play audio">&#9658;</button>
+                    <div class="audio-controls">
+                        <div class="audio-progress-container">
+                            <div id="progress-bar" class="audio-progress-bar">
+                                <div id="progress-fill" class="audio-progress-fill"></div>
+                            </div>
+                        </div>
+                        <span id="audio-time" class="audio-time">0:00 / 5:45</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clean Manuscript Section -->
+            <div id="story-read" class="card">
+                <div class="story-manuscript">
+                    <p>This is not a story asking for pity. It is a story about what happens when people fall through the cracks — and what becomes possible when community steps in before a person disappears entirely.</p>
+                    
+                    <div class="story-section-title">The Slow Squeeze</div>
+                    <p>It didn’t happen in one dramatic moment. It was a slow squeeze — unstable work, rising costs, and the impossible task of holding onto a mortgage while still covering basic living.
+                    The tipping point? A $500 bill at the wrong time.
+                    If a roommate had moved in a week earlier… If one payment had landed sooner… I would’ve kept the house.
+                    It wasn’t thousands. It was timing.</p>
+
+                    <div class="story-section-title">The Drift</div>
+                    <p>Sleeping rough isn’t just “not having a home.” You don’t sleep — you drift. You stay half-awake, half-alert, always aware of who’s around and where your things are.
+                    Your belongings aren’t really yours. They get stolen. Moved. Soaked. Or taken in council cleanups.
+                    You can lose everything in a single night.
+                    And when it rains… whatever the theft didn’t take… the rain dissolves.</p>
+
+                    <div class="story-section-title">The Winter Night</div>
+                    <p>One freezing night in the middle of winter changed something in me.
+                    I was trying to look after two other men in the side walkways of Paddy Troy Mall — one elderly and sick, one paralytic and incoherent.
+                    Between the three of us, we had two single sleeping bags.
+                    I did what I could. Kept them sheltered. Kept them warm. Kept them alive.
+                    Then at 3 AM, we got a move-on notice. No trouble. No complaint. Just trying to survive the cold.
+                    That was the moment something snapped — not in despair, but in rage at the helplessness. At the way the system treats survival like an inconvenience.</p>
+
+                    <!-- Transition Bridge Panel -->
+                    <div class="story-bridge-panel">
+                        "This story did not end under a bridge. Through the support of people in Fremantle, including the community around Community of Kindness, survival became recovery — and recovery became a reason to help build something better."
+                    </div>
+
+                    <div class="story-section-title">The Crystallisation</div>
+                    <p>But standing there in the cold… something else formed.
+                    I realised the pressure wasn’t breaking me — it was compressing me. Like diamond formation: intense pressure creating clarity.
+                    That night became the start of a new kind of logic. A new way of seeing the patterns.</p>
+
+                    <div class="story-section-title">The Diamond Soul Constellation</div>
+                    <p>Even out here, I haven’t lost who I am. I still see systems. Patterns. Ways things could be better.
+                    Over the past few years, I’ve been developing a framework I call the Diamond Soul Constellation — ideas around identity, community, and technology, built from lived experience and systemic insight.
+                    But when your day revolves around whether your gear has been stolen, seized, or soaked… it’s almost impossible to operate at the level you know you can.</p>
+
+                    <div class="story-section-title">The Latest Hit</div>
+                    <p>And the pressure doesn’t stop. Today, while I was out trying to feed myself, Wilson’s Parking took everything of value and importance I had left. Not just items — anchors. The things that keep you stable enough to function.
+                    Gone.
+                    I’m walking with one shoe, a guitar, and a backpack full of empty power banks. The antibiotics I was meant to be taking? The scripts I needed to fill? Lost days ago in the chaos of trying to keep myself and someone else safe.
+                    Last night I took the girl I care about to a safe house — I thought it was a moment of stability. Now she’s with a friend and the son of the house, and I’m back out here again, trying to hold myself together with nothing charged, nothing warm, nothing certain.
+                    
+                    Collapse doesn’t happen once. It happens in waves. It happens in spirals. It happens in the small moments — the missing shoe, the empty battery, the lost medication — that add up until you’re standing on the edge of something dark and you have to decide whether you’re going to fall or build something from the pressure.</p>
+
+                    <div class="story-section-title">The Turning Point</div>
+                    <p>I don’t want to go “back to normal.” Normal already failed.
+                    What I need is a reset point — enough stability to breathe, think clearly, and start building again. A laptop so I can use the skills I’ve spent years developing. A safe enough base to turn insight into action.
+                    Because this isn’t the end. It’s a turning point.
+                    I’m still here. Still watching the patterns across Fremantle. Still believing we can build better bridges than the ones we’re sleeping under.</p>
+
+                    <div class="story-section-title">Support Stability & Creative Restoration</div>
+                    <p>If you would like to support my personal stability, basic essentials, or creative recovery, you can contribute directly using the channels below:</p>
+                    <div class="btn-group" style="margin-bottom: 1.5rem;">
+                        <a href="https://gofund.me/4915e9cc4" target="_blank" class="btn btn-secondary">GoFundMe: Essentials</a>
+                        <a href="https://paypal.me/Klwilde" target="_blank" class="btn btn-secondary">PayPal: @Klwilde</a>
+                        <a href="https://ko-fi.com/klwilde" target="_blank" class="btn btn-secondary">Ko-fi: klwilde</a>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">
+                        <strong>Direct Transfer (PayID / Bendigo Bank):</strong><br>
+                        PayID: 0422 238 078<br>
+                        BSB: 633-000 | Account: 237 961 850 | Account Name: D. Cornwell
+                    </p>
+                </div>
+
+                <!-- End-of-Story Conversion Panel -->
+                <div class="conversion-panel">
+                    <h3>A Meal. A Place to Belong. A Way Forward.</h3>
+                    <p>Community of Kindness Lunchies is a grassroots Fremantle initiative supporting people experiencing hardship, homelessness, and isolation through food, connection, practical help, and community belonging.</p>
+                    <div class="btn-group" style="justify-content: center;">
+                        <a href="https://gofund.me/1431c79dd" target="_blank" class="btn btn-primary btn-gofundme">Support Freya's GoFundMe</a>
+                        <a href="#/living-layers" class="btn btn-secondary">Join Living Layers Map</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- View 2: Community of Kindness Fundraiser -->
+        <section id="kindness-fundraiser" class="view">
+            <div class="card">
+                <h2>Help Keep Kindness on the Table in Fremantle</h2>
+                <p>Community of Kindness Lunchies brings people together around food, dignity, and practical care. This is not abstract change. It is a meal shared, a conversation held, a person welcomed, and a local community choosing not to look away.</p>
+                
+                <div class="alert-box alert-info">
+                    <strong>Grounded Impact Pathway</strong><br>
+                    This fundraiser directly supports Freya's ongoing grassroots volunteer work. It is independent of any institutional brand and targets immediate local community needs directly.
+                </div>
+
+                <div class="btn-group" style="margin-bottom: 2rem;">
+                    <a href="https://gofund.me/1431c79dd" target="_blank" class="btn btn-primary btn-gofundme" style="font-size: 1.1rem; padding: 0.9rem 2rem;">
+                        Support a Lunch (GoFundMe)
+                    </a>
+                </div>
+
+                <h3>Offer Your Support Directly</h3>
+                <p>If you prefer to volunteer time or contribute goods, please fill out the form below. We coordinate with local organizers to deliver practical aid directly.</p>
+
+                <div id="volunteer-feedback"></div>
+
+                <form id="volunteer-form">
+                    <div class="form-group">
+                        <label for="vol-name">Full Name</label>
+                        <input type="text" id="vol-name" class="form-control" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vol-email">Email Address</label>
+                        <input type="email" id="vol-email" class="form-control" placeholder="Your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vol-type">How would you like to contribute?</label>
+                        <select id="vol-type" class="form-control" required>
+                            <option value="time">Volunteer Time (help prep/serve meals)</option>
+                            <option value="goods">Contribute Goods (food supplies, warm clothing)</option>
+                            <option value="skills">Contribute Skills (allied health support, legal advice)</option>
+                            <option value="other">Other Practical Assistance</option>
+                        </select>
+                    </div>
+                    <div class="consent-container">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="vol-consent" required>
+                            <span>I consent to sharing this info with Community of Kindness organizers for direct volunteer coordination. My data is protected and will not be shared for marketing purposes.</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Submit Offer of Support</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- View 3: Living Layers Capture Page -->
+        <section id="living-layers" class="view">
+            <div class="card">
+                <h2>Fremantle Is Made of Living Layers</h2>
+                <p>Every person carries knowledge, need, skill, memory, and value. Living Layers is a consent-first community participation map for people who want to help, contribute, connect, or shape what comes next in Fremantle.</p>
+                
+                <div id="layers-feedback"></div>
+
+                <form id="layers-form">
+                    <div class="form-group">
+                        <label for="layer-name">Name</label>
+                        <input type="text" id="layer-name" class="form-control" placeholder="Your name (or pseudonym)" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="layer-contact">Contact Info (Email, Phone, or Social handle)</label>
+                        <input type="text" id="layer-contact" class="form-control" placeholder="How we can reach you" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="layer-route">Choose Your Layer</label>
+                        <select id="layer-route" class="form-control" required>
+                            <option value="" disabled selected>Select how you want to participate...</option>
+                            <option value="supporter">I want to support Community of Kindness (Supporter)</option>
+                            <option value="volunteer">I want to volunteer or contribute practical help (Somatic Aid)</option>
+                            <option value="needs_support">I need support or connection (Confidential Channel)</option>
+                            <option value="story">I have a local story or lived experience to share (Narrative Layer)</option>
+                            <option value="timeshift">I know a place, mural or memory worth preserving (TimeShiftAR Node)</option>
+                            <option value="partner">I represent an organisation, service or business (Partner)</option>
+                            <option value="funder">I want to fund or collaborate on future builds (Funder/Sponsor)</option>
+                            <option value="updates">I only want general updates (Mailing List)</option>
+                        </select>
+                    </div>
+
+                    <!-- Dynamic field injection container -->
+                    <div id="custom-fields-container"></div>
+
+                    <div class="consent-container">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="layer-consent" required>
+                            <span>Living Layers is built entirely around consent and dignity. Your information will only be used to facilitate the connection level you choose and will never be shared without further permission. You can opt out at any time.</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Join the Layer</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- View 4: TimeShiftAR Civic Capture -->
+        <section id="timeshift-capture" class="view">
+            <div class="card">
+                <h2>What Stories Are Hidden in the Streets of Walyalup?</h2>
+                <p>TimeShiftAR is a proposed living archive for Fremantle: a way to preserve murals, places, memories, and community stories through location-based digital augmented reality experiences. It begins with listening — to artists, residents, people with lived experience, property holders, community workers, and local partners.</p>
+                
+                <div class="alert-box alert-info">
+                    <strong>Preservation Paradigm</strong><br>
+                    This is an exploration of cultural and civic memory mapping, linking place-based stories to public visibility while maintaining privacy boundaries for lived experience.
+                </div>
+
+                <div id="ts-feedback"></div>
+
+                <form id="timeshift-form">
+                    <div class="form-group">
+                        <label for="ts-role">I am registering interest as a:</label>
+                        <select id="ts-role" class="form-control" required>
+                            <option value="resident">Local Resident</option>
+                            <option value="artist">Creative / Visual Artist</option>
+                            <option value="owner">Property / Venue Owner</option>
+                            <option value="worker">Community or Social Worker</option>
+                            <option value="partner">Funder / Strategic Partner</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ts-loc">Fremantle Location or Landmark of Interest</label>
+                        <input type="text" id="ts-loc" class="form-control" placeholder="e.g. Paddy Troy Mall mural, Walyalup Koort" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ts-desc">Story, memory, or suggestion for this node</label>
+                        <textarea id="ts-desc" class="form-control" placeholder="Describe the artwork, memory, or historical layer you'd like to document." required></textarea>
+                    </div>
+
+                    <div class="consent-container">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="ts-consent" required>
+                            <span>I consent to submit this location data for community mapping. No personal tracking or identifying coordinates will be published without explicit approval.</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit Location Node</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- View 5: Diamond Soul Portfolio Dashboard -->
+        <section id="diamond-soul" class="view">
+            <div class="hero">
+                <h2>The Diamond Soul Constellation</h2>
+                <p class="hero-subtitle">A portfolio of civic, creative, technology, and care initiatives.</p>
+            </div>
+
+            <!-- Interactivity Core: Somatic Breathing Shield Tool -->
+            <div class="card" style="text-align: center;">
+                <h3>Somatic Grounding & Shield Exercise</h3>
+                <p>The Diamond Soul Protocol recommends somatic breath cadence (4-4-6) to maintain signal hygiene and clarity under pressure.</p>
+                
+                <div style="margin: 2rem 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;">
+                    <!-- Breathing circle element -->
+                    <div id="breath-circle" style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--gem-diamond), var(--gem-amethyst)); box-shadow: 0 0 20px var(--gem-diamond-glow); display: flex; align-items: center; justify-content: center; font-weight: bold; color: #06080b;">
+                        <span id="breath-timer" style="font-size: 1.25rem;"></span>
+                    </div>
+                    <h4 id="breath-label" style="font-family: var(--font-body); font-weight: 600; color: var(--gem-diamond); min-height: 24px;">Click start to begin breathing cadence</h4>
+                </div>
+                
+                <button id="breath-start" class="btn btn-secondary">Start Breathing Cadence</button>
+            </div>
+
+            <!-- The Core Portfolio Layout Grid -->
+            <div class="portfolio-grid">
+                
+                <!-- Gateway 1: Walyalup Bridge -->
+                <div class="portfolio-card core-gateway">
+                    <div>
+                        <div class="portfolio-tag">Narrative & Testimony</div>
+                        <h3>Walyalup Bridge</h3>
+                        <p>A true account of survival, dignity, and pattern recognition on the streets of Fremantle. The emotional anchor of the constellation.</p>
+                    </div>
+                    <a href="#/walyalup-bridge" class="btn btn-secondary" style="margin-top: 1rem; width: 100%;">View Story</a>
+                </div>
+
+                <!-- Gateway 2: Community of Kindness support -->
+                <div class="portfolio-card fundraiser-gateway">
+                    <div>
+                        <div class="portfolio-tag">Direct Local Action</div>
+                        <h3>Kindness Support</h3>
+                        <p>Providing meals, dignity, social connection, and practical support to people experiencing isolation or hardship on the ground.</p>
+                    </div>
+                    <a href="#/kindness-fundraiser" class="btn btn-secondary" style="margin-top: 1rem; width: 100%;">Support Initiatives</a>
+                </div>
+
+                <!-- Gateway 3: Living Layers -->
+                <div class="portfolio-card active-gateway">
+                    <div>
+                        <div class="portfolio-tag">Consent-First Map</div>
+                        <h3>Living Layers</h3>
+                        <p>A decentralized community participation map for mapping support, needs, volunteer resources, and civic testimony in Fremantle.</p>
+                    </div>
+                    <a href="#/living-layers" class="btn btn-secondary" style="margin-top: 1rem; width: 100%;">Register Layer</a>
+                </div>
+
+                <!-- Gateway 4: TimeShiftAR -->
+                <div class="portfolio-card">
+                    <div>
+                        <div class="portfolio-tag">Civic & Cultural Memory</div>
+                        <h3>TimeShiftAR</h3>
+                        <p>Location-based digital experiences preserving murals, public art, oral histories, and community memories in public spaces.</p>
+                    </div>
+                    <a href="#/timeshift-capture" class="btn btn-secondary" style="margin-top: 1rem; width: 100%;">View Projects</a>
+                </div>
+
+                <!-- Gateway 5: Plus One -->
+                <div class="portfolio-card active-gateway">
+                    <div>
+                        <div class="portfolio-tag">Upcycled Couture</div>
+                        <h3>Plus One / Haus Da Villa Wilde</h3>
+                        <p>Intelligent AI-guided listing engine to photograph clothing and automatically list it on 5 major online marketplaces.</p>
+                    </div>
+                    <a href="#/plus-one" class="btn btn-secondary" style="margin-top: 1rem; width: 100%;">Launch Listing Assistant</a>
+                </div>
+
+                <!-- Gateway 6: CareX -->
+                <div class="portfolio-card">
+                    <div>
+                        <div class="portfolio-tag">Ethics & Value Framework</div>
+                        <h3>CareX</h3>
+                        <p>An information and contribution-accounting logic that visualizes, measures, and rewards care value and mutual support.</p>
+                    </div>
+                    <button class="btn btn-secondary" style="margin-top: 1rem; width: 100%; cursor: not-allowed;" disabled>Stage 3 Rollout</button>
+                </div>
+
+                <!-- Gateway 7: OmniStrux -->
+                <div class="portfolio-card">
+                    <div>
+                        <div class="portfolio-tag">Systems & Governance</div>
+                        <h3>OmniStrux</h3>
+                        <p>The overarching organizational framework coordinating tech, creative arts, and care into systems of human flourishing.</p>
+                    </div>
+                    <button class="btn btn-secondary" style="margin-top: 1rem; width: 100%; cursor: not-allowed;" disabled>Governance Layer</button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- View 6: Plus One / Haus Da Villa Wilde Listing Engine -->
+        <section id="plus-one" class="view">
+            <div class="card" style="position: relative;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; gap: 1rem;">
+                    <h2 style="margin: 0; padding-bottom: 0;">Plus One / Haus Da Villa Wilde</h2>
+                    <button id="settings-toggle-btn" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">⚙ API Settings</button>
+                </div>
+                <p>An intelligent, agent-guided clothing listing engine. Frame your pictures correctly, review suggestions, and auto-list across 5 platforms including live eBay publishing.</p>
+                
+                <!-- API Credentials Config Box (Initially Hidden) -->
+                <div id="api-settings-box" class="consent-container" style="display: none; margin-top: 0.5rem; margin-bottom: 1.5rem;">
+                    <h4>eBay API Configuration</h4>
+                    <p style="font-size: 0.85rem; margin-bottom: 1rem;">Configure your credentials to enable real API posting, or keep them empty to use high-fidelity sandbox simulation.</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label for="ebay-client-id">App ID (Client ID)</label>
+                            <input type="text" id="ebay-client-id" class="form-control" placeholder="e.g. klwilde-PlusOne-SBX-..." style="padding: 0.5rem 0.75rem;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label for="ebay-client-secret">Client Secret</label>
+                            <input type="password" id="ebay-client-secret" class="form-control" placeholder="e.g. SBX-1234abcd..." style="padding: 0.5rem 0.75rem;">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 0.5rem; margin-bottom: 0;">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="ebay-live-mode">
+                            <span>Enable Live API publishing (Default is Simulation Mode)</span>
+                        </label>
+                    </div>
+                    <button id="save-settings-btn" class="btn btn-primary" style="margin-top: 1rem; font-size: 0.85rem; padding: 0.5rem 1rem;">Save API Config</button>
+                </div>
+
+                <!-- Wizard Progress Bar -->
+                <div class="wizard-steps-container">
+                    <div class="wizard-progress-line">
+                        <div class="wizard-progress-fill" id="wizard-progress-fill" style="width: 12.5%;"></div>
+                    </div>
+                    <div class="wizard-steps">
+                        <div class="w-step active" id="w-step-1" data-step="1">
+                            <span class="w-step-num">1</span>
+                            <span class="w-step-label">Photos</span>
+                        </div>
+                        <div class="w-step" id="w-step-2" data-step="2">
+                            <span class="w-step-num">2</span>
+                            <span class="w-step-label">Details</span>
+                        </div>
+                        <div class="w-step" id="w-step-3" data-step="3">
+                            <span class="w-step-num">3</span>
+                            <span class="w-step-label">Optimize</span>
+                        </div>
+                        <div class="w-step" id="w-step-4" data-step="4">
+                            <span class="w-step-num">4</span>
+                            <span class="w-step-label">Publish</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wizard Panels -->
+                
+                <!-- Panel 1: Guided Photo Capture -->
+                <div class="wizard-panel active" id="w-panel-1">
+                    <div class="photo-layout-grid">
+                        <!-- Camera & Feedback Frame -->
+                        <div class="camera-column">
+                            <div class="camera-frame-wrapper">
+                                <div class="camera-overlay-grid">
+                                    <div class="grid-line grid-v1"></div>
+                                    <div class="grid-line grid-v2"></div>
+                                    <div class="grid-line grid-h1"></div>
+                                    <div class="grid-line grid-h2"></div>
+                                    <div class="camera-outline-guide" id="camera-outline-guide">ALIGN ITEM FRONT SILHOUETTE</div>
+                                </div>
+                                <video id="webcam-video" autoplay playsinline style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"></video>
+                                <canvas id="photo-canvas" style="display: none;"></canvas>
+                                <div id="camera-placeholder" class="camera-placeholder-graphic">
+                                    <span style="font-size: 3rem;">📸</span>
+                                    <p style="margin: 0.5rem 0 0.25rem;">Camera Stream Ready</p>
+                                    <small style="color: var(--text-muted);">Click "Start Camera" or upload a file below</small>
+                                </div>
+                                <img id="captured-image-view" style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" alt="Captured Ingestion">
+                                
+                                <div class="camera-scan-bar" id="camera-scan-bar" style="display: none;"></div>
+                            </div>
+                            
+                            <div class="btn-group" style="justify-content: center; margin-top: 1rem;">
+                                <button id="start-camera-btn" class="btn btn-secondary">📹 Start Camera</button>
+                                <button id="capture-photo-btn" class="btn btn-primary" disabled>📸 Capture Photo</button>
+                                <label class="btn btn-secondary" style="margin: 0; display: inline-flex; align-items: center; justify-content: center;">
+                                    📂 Upload File
+                                    <input type="file" id="file-upload-input" accept="image/*" style="display: none;">
+                                </label>
+                            </div>
+                            <div style="text-align: center; margin-top: 0.75rem;">
+                                <button id="load-samples-btn" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem; border-color: var(--gem-amethyst); color: #e9d5ff;">🧪 Load Sample Clothes (Testing Mode)</button>
+                            </div>
+                        </div>
+
+                        <!-- Feedback & Checklist Column -->
+                        <div class="feedback-column">
+                            <!-- Ingestion checklist -->
+                            <div class="photo-checklist-card">
+                                <h4>Ingestion Progress</h4>
+                                <ul class="photo-checklist">
+                                    <li class="chk-item active" id="chk-shot-1">
+                                        <span class="chk-dot">◆</span>
+                                        <span class="chk-text">1. Front Silhouette View</span>
+                                    </li>
+                                    <li class="chk-item" id="chk-shot-2">
+                                        <span class="chk-dot">◆</span>
+                                        <span class="chk-text">2. Back Symmetry View</span>
+                                    </li>
+                                    <li class="chk-item" id="chk-shot-3">
+                                        <span class="chk-dot">◆</span>
+                                        <span class="chk-text">3. Brand/Size Label Macro</span>
+                                    </li>
+                                    <li class="chk-item" id="chk-shot-4">
+                                        <span class="chk-dot">◆</span>
+                                        <span class="chk-text">4. Fabric Texture Detail</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Agent Vision CLI Console -->
+                            <div class="agent-cli-panel">
+                                <div class="agent-cli-header">
+                                    <span class="agent-cli-dot"></span>
+                                    <span class="agent-cli-title">Agent-Vision v1.0.4</span>
+                                </div>
+                                <div class="agent-cli-body" id="agent-vision-logs">
+                                    <p class="log-info">> Ingest System Initialized.</p>
+                                    <p class="log-info">> Awaiting user action or sample ingestion...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Captured Gallery Preview -->
+                    <div style="margin-top: 2rem;">
+                        <h4>Captured Photo Queue</h4>
+                        <div class="captured-gallery" id="captured-gallery-container">
+                            <div class="gallery-empty-box">No photos captured yet.</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end; margin-top: 2rem;">
+                        <button id="goto-step-2-btn" class="btn btn-secondary" disabled>Next: Item Details ➔</button>
+                    </div>
+                </div>
+
+                <!-- Panel 2: Item Metadata Details -->
+                <div class="wizard-panel" id="w-panel-2">
+                    <h3>Item Characteristics</h3>
+                    <p>Refine the descriptive signals of your item to assist the sales optimization engine.</p>
+                    
+                    <form id="item-metadata-form" style="margin-top: 1rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; flex-wrap: wrap;">
+                            <div class="form-group col-span-mobile">
+                                <label for="meta-title-seed">Base Title / Seed Keywords</label>
+                                <input type="text" id="meta-title-seed" class="form-control" placeholder="e.g. vintage leather biker jacket" required>
+                            </div>
+                            <div class="form-group col-span-mobile">
+                                <label for="meta-brand">Brand</label>
+                                <input type="text" id="meta-brand" class="form-control" placeholder="e.g. Harley Davidson, Levi's" required>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+                            <div class="form-group">
+                                <label for="meta-size">Size</label>
+                                <input type="text" id="meta-size" class="form-control" placeholder="e.g. L, 32, 10" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="meta-gender">Gender / Fit</label>
+                                <select id="meta-gender" class="form-control" required>
+                                    <option value="Mens">Mens / Masculine Fit</option>
+                                    <option value="Womens">Womens / Feminine Fit</option>
+                                    <option value="Unisex" selected>Unisex / Loose Fit</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="meta-color">Primary Color</label>
+                                <input type="text" id="meta-color" class="form-control" placeholder="e.g. distressed black" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="meta-condition">Condition</label>
+                                <select id="meta-condition" class="form-control" required>
+                                    <option value="New with Tags">New with Tags (NWT)</option>
+                                    <option value="Excellent Gently Used" selected>Excellent Gently Used</option>
+                                    <option value="Fair / Heavily Faded">Fair / Heavily Faded</option>
+                                    <option value="Upcycled / Reworked Couture">Upcycled / Reworked Couture</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 1rem;">
+                            <label for="meta-defects">Notes / Imperfections / Special Details</label>
+                            <textarea id="meta-defects" class="form-control" placeholder="e.g. heavy leather structure, zipper in good shape, light lining wear" required></textarea>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+                            <button type="button" id="backto-step-1-btn" class="btn btn-secondary">🏢 Back to Photos</button>
+                            <button type="submit" id="generate-listings-btn" class="btn btn-primary">⚡ Generate Marketplace Listings</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Panel 3: Generate and Tweak Listings -->
+                <div class="wizard-panel" id="w-panel-3">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;">
+                        <h3 style="margin: 0;">Sales-Optimized Marketplaces</h3>
+                        <p style="color: var(--gem-diamond); margin: 0; font-weight: bold;">Top 5 Listings Ready</p>
+                    </div>
+                    <p style="margin-bottom: 2rem;">Our agent has custom-tailored the title, descriptions, and hashtags for each platform's distinct demographic and SEO algorithms.</p>
+                    
+                    <!-- Marketplace Tabs Header -->
+                    <div class="mkt-tabs-container">
+                        <div class="mkt-tab active" data-mkt="ebay">🛒 eBay</div>
+                        <div class="mkt-tab" data-mkt="poshmark">💎 Poshmark</div>
+                        <div class="mkt-tab" data-mkt="depop">🔥 Depop</div>
+                        <div class="mkt-tab" data-mkt="mercari">📦 Mercari</div>
+                        <div class="mkt-tab" data-mkt="vinted">🌿 Vinted</div>
+                    </div>
+
+                    <!-- Marketplace Panels -->
+                    <div class="mkt-panel active" id="mkt-panel-ebay">
+                        <div class="mkt-field-group">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                <label style="font-weight: 500; font-size: 0.85rem; color: var(--text-secondary);">Optimized Search Title (Max 80 Chars)</label>
+                                <span class="char-count" id="ebay-title-count" style="font-size: 0.85rem; color: var(--text-muted);">0/80</span>
+                            </div>
+                            <input type="text" id="ebay-title-field" class="form-control text-mono-edit">
+                        </div>
+                        
+                        <div class="mkt-field-group" style="margin-top: 1.5rem;">
+                            <label style="font-weight: 500; font-size: 0.85rem; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">Item Specifics Injection</label>
+                            <div class="item-specs-grid" id="ebay-specs-container">
+                                <!-- Generated specifics will go here -->
+                            </div>
+                        </div>
+
+                        <div class="mkt-field-group" style="margin-top: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                <label style="font-weight: 500; font-size: 0.85rem; color: var(--text-secondary);">Sales Optimized Description (HTML Structured)</label>
+                                <button class="copy-field-btn" data-target="ebay-desc-field" style="background: none; border: none; color: var(--gem-diamond); cursor: pointer; font-size: 0.85rem;">📋 Copy</button>
+                            </div>
+                            <textarea id="ebay-desc-field" class="form-control text-mono-edit" style="min-height: 200px; font-family: monospace; font-size: 0.85rem;"></textarea>
+                        </div>
+
+                        <div class="mkt-financial-summary">
+                            <div class="financial-card">
+                                <span class="financial-lbl">Suggested Price</span>
+                                <span class="financial-val" id="ebay-price-tag">$0.00</span>
+                            </div>
+                            <div class="financial-card">
+                                <span class="financial-lbl">Est. eBay Fee (13.25% + $0.30)</span>
+                                <span class="financial-val text-red" id="ebay-fees-tag">-$0.00</span>
+                            </div>
+                            <div class="financial-card">
+                                <span class="financial-lbl">Net Margin (Excl. Shipping)</span>
+                                <span class="financial-val text-green" id="ebay-net-tag">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mkt-panel" id="mkt-panel-poshmark">
+                        <div class="mkt-field-group">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                <label style="font-weight: 500; font-size: 0.85rem; color: var(--text-secondary);">Poshmark Title</label>
+                                <span class="char-count" id="posh-title-count" style="font-size: 0.85rem; color: var(--text-muted);">0/80</span>
+                            </div>
+                            <input type="text" id="posh-title-field" class="form-control text-mono-edit">
+                        </div>
+
+                        <div class="mkt-field-group" style="margin-top: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                <label style="font-weight: 500; font-size: 0.85rem; color: var(--text-secondary);">Poshmark Body (Including Bundle Promo)</label>
+                                <button class="copy-field-btn" data-target="posh-desc-field" style="background: none; border: none; color: var(--gem-diamond); cursor: pointer; font-size: 0.85rem;">📋 Copy</button>
+                            </div>
+                            <textarea id="posh-desc-field" class="form-control text-mono-edit" style="min-height: 180px;"></textarea>
+                        </div>
+
+                        <div class="mkt-financial-summary">
+                            <div class="financial-card">
+                                <span class="financial-lbl">Suggested Price</span>
+                                <span class="financial-val" id="posh-price-tag">$0.00</span>
+                            </div>
+                            <div class="financial-card">
+                                <span class="financial-lbl">Poshmark Commission (20%)</span>
+                                <span class="financial-val text-red" id="posh-fees-tag">-$0.00</span>
+                            </div>
+                            <div class="financial-card">
+                                <span class="financial-lbl">Net Margin</span>
+                                <span class="financial-val text-green" id="posh-net-tag">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mkt-panel" id="mkt-panel-depop">
+                        <div class="mkt-field-group">
+                            <label style="font-weight: 500; font-size: 0.85rem; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">Depop Title (Aesthetic Keyword-driven)</label>
+                            <input type="text" id="depop-title-field" class="form-control text-mono-edit">
+                        </div>
+
+                        <div class="mkt-field-group" style="margin-top: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                <label style="font-weight: 500; font-size: 0.85rem; color: var(--text-secondary);">Depop Visual Copy & Emojis</label>
+                                <button class="copy-field-btn" data-target="depop-desc-field" style="background: none; border: none; color: var(--gem-diamond); cursor: pointer; font-size: 0.85rem;">📋 Copy</button>
+                            </div>
+                            <textarea id="depop-desc-field" class="form-control text-mono-edit" style="min-height: 180px;"></textarea>
+                        </div>
+
+                        <div class="mkt-financial-summary">
+                            <div class="financial-card">
+                                <span class="financial-lbl">Suggested Price</span>
+                                <span class="financial-val" id="depop-price-tag">$0.00</span>
+                            </div>
+                            <div class="financial-card">
+                                <span class="financial-lbl">Depop Fees (10% + 2.9% transaction)</span>
+                                <span class="financial-val text-red" id="depop-fees-tag">-$0.00</span>
+                            </div>
+                            <div class="financial-card">
+                                <span class="financial-lbl">Net Margin</span>
+                                <span class="financial-val text-green" id="depop-net-tag">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mkt-panel" id="mkt-panel-mercari">
+                        <div class="mkt-field-group">
+                            <label style="font-weight: 500; font-size: 0.85rem; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">Mercari Title</label>
+                            <input type="text" id="mercari-title-field" class="form-control text-mono-edit">
+                        </div>
+
+                        <div class="mkt-field-group" style="margin-top: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                <label style="font-weight: 500; font-size: 0.85rem; color: var(--text-secondary);">Mercari Description (Friendly & Bulleted)</label>
+                                <button class="copy-field-btn" data-target="mercari-desc-field" style="background: none; border: none; color: var(--gem-diamond); cursor: pointer; font-size: 0.85rem;">📋 Copy</button>
+                            </div>
+                            <textarea id="mercari-desc-field" class="form-control text-mono-edit" style="min-height: 180px;"></textarea>
+                        </div>
+
+                        <div class="mkt-financial-summary">
+                            <div class="financial-card">
+                                <span class="financial-lbl">Suggested Price</span>
+                                <span class="financial-val" id="mercari-price-tag">$0.00</span>
+                            </div>
+                            <div class="financial-card">
+                                <span class="financial-lbl">Mercari Selling Fees (10%)</span>
+                                <span class="financial-val text-red" id="mercari-fees-tag">-$0.00</span>
+                            </div>
+                            <div class="financial-card">
+                                <span class="financial-lbl">Net Margin</span>
+                                <span class="financial-val text-green" id="mercari-net-tag">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mkt-panel" id="mkt-panel-vinted">
+                        <div class="mkt-field-group">
+                            <label style="font-weight: 500; font-size: 0.85rem; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">Vinted Title (Clear & Simple)</label>
+                            <input type="text" id="vinted-title-field" class="form-control text-mono-edit">
+                        </div>
+
+                        <div class="mkt-field-group" style="margin-top: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                <label style="font-weight: 500; font-size: 0.85rem; color: var(--text-secondary);">Vinted Description (Sustainability-focused)</label>
+                                <button class="copy-field-btn" data-target="vinted-desc-field" style="background: none; border: none; color: var(--gem-diamond); cursor: pointer; font-size: 0.85rem;">📋 Copy</button>
+                            </div>
+                            <textarea id="vinted-desc-field" class="form-control text-mono-edit" style="min-height: 180px;"></textarea>
+                        </div>
+
+                        <div class="mkt-financial-summary">
+                            <div class="financial-card">
+                                <span class="financial-lbl">Suggested Price</span>
+                                <span class="financial-val" id="vinted-price-tag">$0.00</span>
+                            </div>
+                            <div class="financial-card">
+                                <span class="financial-lbl">Vinted Seller Fees (0% Buyer pays)</span>
+                                <span class="financial-val text-red">-$0.00</span>
+                            </div>
+                            <div class="financial-card">
+                                <span class="financial-lbl">Net Margin</span>
+                                <span class="financial-val text-green" id="vinted-net-tag">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+                        <button id="backto-step-2-btn" class="btn btn-secondary">🏢 Back to Details</button>
+                        <button id="goto-step-4-btn" class="btn btn-primary">➔ Proceed to Deploy & Sync</button>
+                    </div>
+                </div>
+
+                <!-- Panel 4: Deploy & Sync to eBay (OAuth & Terminal CLI) -->
+                <div class="wizard-panel" id="w-panel-4">
+                    <h3>Agent Sync & Publish</h3>
+                    <p>Log in securely to eBay via OAuth and let our active listing daemon post your item automatically.</p>
+                    
+                    <div class="oauth-section-card">
+                        <div class="oauth-status-bar">
+                            <div class="oauth-status-info">
+                                <span class="oauth-indicator red" id="ebay-auth-indicator"></span>
+                                <span id="ebay-auth-status-text">Disconnected from eBay API</span>
+                            </div>
+                            <button id="ebay-oauth-btn" class="btn btn-secondary" style="font-size: 0.9rem; padding: 0.5rem 1.25rem;">🔗 Connect eBay Account</button>
+                        </div>
+                    </div>
+
+                    <!-- Daemon Console -->
+                    <div class="agent-cli-panel" style="margin-top: 1.5rem;">
+                        <div class="agent-cli-header" style="background-color: #1a0f2b; border-bottom-color: rgba(280, 60, 65, 0.15); display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span class="agent-cli-dot" style="background-color: var(--gem-amethyst); box-shadow: 0 0 8px var(--gem-amethyst);"></span>
+                                <span class="agent-cli-title" style="color: var(--gem-amethyst); font-weight: 600;">PlusOne Listing Daemon [Active]</span>
+                            </div>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace;">status: idle</span>
+                        </div>
+                        <div class="agent-cli-body console-daemon" id="daemon-publishing-logs" style="min-height: 180px;">
+                            <p class="log-warning">> Listing Agent Ready.</p>
+                            <p class="log-warning">> Connect eBay OAuth channel above to enable deployment.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+                        <button id="backto-step-3-btn" class="btn btn-secondary">🏢 Back to Listings</button>
+                        <button id="publish-ebay-btn" class="btn btn-primary" style="background-color: var(--gem-emerald); color: #06080b;" disabled>🚀 Publish Live to eBay</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Diamond Soul Constellation. Handcrafted in Walyalup / Fremantle.</p>
+            <div class="signature-line">
+                <span class="signature-symbol">■</span> OmniStruX | The Architecture of Readiness
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal 1: eBay OAuth Simulation Login -->
+    <div id="ebay-oauth-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content oauth-modal">
+            <div class="oauth-modal-header">
+                <span class="ebay-logo-font"><span class="e">e</span><span class="b">b</span><span class="a">a</span><span class="y">y</span></span>
+                <h3>Grant Access to Plus One Listing Assistant</h3>
+            </div>
+            <div class="oauth-modal-body">
+                <p>To publish listings automatically, **Plus One** needs permission to manage your eBay inventory, offers, and metadata drafts.</p>
+                <div class="oauth-permissions-box">
+                    <h5>Requested Scopes:</h5>
+                    <ul>
+                        <li>✔ View and manage your inventory items (SKUs, pictures)</li>
+                        <li>✔ Create and manage listing offers and prices</li>
+                        <li>✔ Retrieve account trading classifications and categories</li>
+                    </ul>
+                </div>
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label for="ebay-user-signin" style="display: block; font-size: 0.85rem; margin-bottom: 0.4rem; color: #4b3832;">Sign in to eBay Account</label>
+                    <input type="text" id="ebay-user-signin" class="form-control" value="klwilde_shop" placeholder="Username or Email" style="margin-bottom: 0.5rem; background-color: #fff; border: 1px solid #ccc; color: #333;">
+                    <input type="password" id="ebay-pass-signin" class="form-control" value="••••••••••••••" placeholder="Password" style="background-color: #fff; border: 1px solid #ccc; color: #333;">
+                </div>
+                <div class="consent-container" style="background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); margin-top: 1rem;">
+                    <small style="font-size: 0.75rem; color: #666; line-height: 1.3; display: block;">By clicking "Agree and Continue", you authorize eBay to share your user tokens with Plus One. These details are stored client-side in your local browser sandbox.</small>
+                </div>
+            </div>
+            <div class="oauth-modal-footer" style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+                <button id="ebay-oauth-cancel" class="btn btn-secondary" style="color: #333; border-color: #ccc;">Cancel</button>
+                <button id="ebay-oauth-approve" class="btn btn-primary" style="background-color: #3665f3; color: white;">Agree and Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Mock eBay Listing Live Preview -->
+    <div id="ebay-preview-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content preview-modal">
+            <div class="preview-modal-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e5e5e5; padding-bottom: 0.75rem;">
+                <span class="ebay-logo-font"><span class="e">e</span><span class="b">b</span><span class="a">a</span><span class="y">y</span></span>
+                <h4 style="margin: 0; color: #333; font-family: sans-serif; font-size: 1.1rem;">Live Listing Verified (Sandbox/Simulation View)</h4>
+                <button id="ebay-preview-close" class="close-btn" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #888;">&times;</button>
+            </div>
+            <div class="preview-modal-body" style="padding-top: 1.5rem; overflow-y: auto; max-height: 75vh;">
+                <div class="ebay-preview-grid">
+                    <div class="ebay-preview-images">
+                        <div class="main-preview-img-wrapper" style="width: 100%; height: 350px; background-color: #f7f7f7; display: flex; align-items: center; justify-content: center; border-radius: 8px; overflow: hidden; border: 1px solid #e5e5e5;">
+                            <img id="ebay-preview-main-img" src="" alt="Listing Primary Shot" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                        </div>
+                        <div class="preview-thumbs-row" id="ebay-preview-thumbs" style="display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap;">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                    <div class="ebay-preview-details">
+                        <span class="ebay-preview-condition-tag" id="ebay-preview-cond" style="background-color: #e2f0d9; color: #385723; padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; font-family: Arial, sans-serif;">Excellent - Gently Used</span>
+                        <h2 class="ebay-preview-title" id="ebay-preview-title" style="margin: 0.5rem 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 500; font-size: 1.35rem; color: #111; line-height: 1.25;">Vintage Levi's 501 Blue Denim Jeans Mens 32x30</h2>
+                        <div class="ebay-preview-seller-info" style="font-size: 0.85rem; color: #555; margin-bottom: 1rem;">
+                            <span>Seller: <strong style="color: #0066c0;">klwilde_shop</strong> (100% positive feedback)</span>
+                        </div>
+                        <div class="ebay-preview-price-box" style="background-color: #f7f7f7; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                            <div style="display: flex; align-items: baseline; gap: 0.5rem;">
+                                <span class="price-lbl" style="font-size: 0.9rem; color: #555;">Price:</span>
+                                <span class="price-val" id="ebay-preview-price" style="font-size: 1.8rem; font-weight: bold; color: #333; font-family: sans-serif;">$79.99</span>
+                            </div>
+                            <span class="shipping-lbl" style="font-size: 0.85rem; color: #008000; font-weight: 500; display: block; margin-top: 0.25rem;">Free Standard Shipping</span>
+                        </div>
+                        <div class="ebay-preview-buy-btns">
+                            <button class="btn btn-primary" style="background-color: #0053a0; border-color: #0053a0; color: white; width: 100%; border-radius: 20px; font-family: Arial, sans-serif; font-size: 0.95rem; font-weight: bold; padding: 0.6rem;" onclick="alert('This is a simulated listing preview.')">Buy It Now</button>
+                            <button class="btn btn-secondary" style="width: 100%; border-radius: 20px; margin-top: 0.5rem; font-family: Arial, sans-serif; font-size: 0.95rem; font-weight: bold; padding: 0.6rem; color: #0053a0; border-color: #0053a0; background: white;" onclick="alert('This is a simulated listing preview.')">Add to Watchlist</button>
+                        </div>
+                        <div style="margin-top: 1.5rem; border-top: 1px solid #e5e5e5; padding-top: 1rem;">
+                            <h5 style="margin: 0 0 0.5rem; color: #333; font-family: sans-serif; font-size: 0.9rem;">Item Specifics:</h5>
+                            <table class="ebay-specs-table" id="ebay-preview-specs-table" style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 0.8rem; color: #333;">
+                                <!-- Populated dynamically -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="ebay-preview-description-box" style="margin-top: 2rem; border-top: 2px solid #3665f3; padding-top: 1rem;">
+                    <h4 style="margin: 0 0 1rem; color: #333; font-family: sans-serif; font-size: 1.1rem;">Item Description from Seller</h4>
+                    <div class="ebay-desc-render-frame" id="ebay-preview-desc-html" style="border: 1px solid #e5e5e5; border-radius: 4px; padding: 1.5rem; background: #fff; color: #333; font-family: Arial, sans-serif; font-size: 0.9rem; line-height: 1.5; min-height: 150px; overflow-y: auto;">
+                        <!-- Rendered HTML description will go here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

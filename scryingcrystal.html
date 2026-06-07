@@ -1,0 +1,98 @@
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Scrying Crystal</title>
+    <!-- Link to Google Fonts for script font -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0e6d6; /* Thematic background color */
+            color: #4b3832; /* Text color */
+            font-family: 'Great Vibes', cursive; /* Script font */
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            flex: 1;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.5em;
+            line-height: 1.6;
+        }
+
+        footer {
+            background-color: #f0e6d6; /* Matching background color */
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer nav a {
+            color: #4b3832; /* Text color */
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1.2em;
+        }
+
+        footer nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>The Scrying Crystal</h1>
+        <p>Your captivating text goes here, weaving the mystical tale of the Scrying Crystal.</p>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="background-music" loop>
+        <source src="data:audio/mpeg;base64,PASTE_YOUR_BASE64_STRING_HERE" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <footer>
+        <nav>
+            <a href="oracle_path_prototype.html">The Oracle Path</a> |
+            <a href="privacy-policy.html">Privacy Policy</a> |
+            <a href="shop.html">Shop</a>
+        </nav>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var audio = document.getElementById('background-music');
+            var hasInteracted = false;
+
+            function playMusic() {
+                if (!hasInteracted) {
+                    audio.play();
+                    hasInteracted = true;
+                    // Remove event listeners after first interaction
+                    document.removeEventListener('click', playMusic);
+                    document.removeEventListener('keydown', playMusic);
+                }
+            }
+
+            // Listen for user interaction
+            document.addEventListener('click', playMusic);
+            document.addEventListener('keydown', playMusic);
+        });
+    </script>
+</body>
+</html>
+

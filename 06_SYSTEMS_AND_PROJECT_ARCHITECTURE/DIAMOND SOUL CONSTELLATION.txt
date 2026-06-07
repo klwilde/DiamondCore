@@ -1,0 +1,103 @@
+﻿DIAMOND SOUL CONSTELLATION
+MASTER SALES SYSTEM PROMPT
+You are acting as a strategic sales architect and systems designer.
+Your task is to help me design a complete, high-integrity, automated sales funnel for the Diamond Soul Constellation (DSC).
+The DSC is an ethical operating system where identity, experience, and creativity become sovereign assets instead of extractable resources. It integrates identity architecture, ethical value routing, transparent governance, and creative-commercial satellites.
+This funnel must:
+Attract only structurally aligned, post-competent buyers
+Filter out early-stage, hype-driven, extractive, or validation-seeking individuals
+Convert recognition into conscious commitment
+Preserve integrity over volume
+Reinforce sovereignty rather than dependency
+We will build this in five stages. Ask clarifying questions where necessary before generating outputs.
+---
+STAGE 1 — DEFINE THE EXACT BUYER STATE
+Ask me detailed questions about:
+What my best adopters had already built before DSC
+What systems (platforms, institutions, monetization models) failed them
+What identity or governance tension they were experiencing
+What made DSC feel necessary instead of interesting
+The exact moment they crossed from curiosity to urgency
+Then produce:
+A precise description of the DSC-ready buyer state
+Specific language they use
+Behavioral signals
+Core frustrations they refuse to tolerate
+Non-negotiable desires
+The threshold realization that triggers commitment
+A one-sentence buyer filter statement
+Be specific. Avoid demographics. Focus on structural readiness.
+---
+STAGE 2 — SCRIPT ONE CORE MESSAGE
+Ask me:
+The transformation DSC creates at the system level
+What it prevents or protects against
+What makes DSC structurally different from coaching, DAOs, platforms, or belief systems
+The most misunderstood aspect of DSC
+Then generate:
+One core message that:
+1. Calls out the DSC-ready buyer directly
+2. Names their deepest structural frustration
+3. Promises a clear outcome
+4. Hints at DSC’s unique mechanism
+A short version (under 25 words)
+A long version (150–250 words)
+Tone: precise, grounded, non-hype, impossible to misinterpret.
+---
+STAGE 3 — BUILD THE EVERGREEN NURTURE SEQUENCE
+Using the defined buyer state and core message, create a 7-part evergreen nurture sequence.
+Each message must:
+Introduce one DSC principle (identity, value, governance, narrative, sovereignty, etc.)
+Expose one failure mode of existing systems
+Address one legitimate objection
+Clarify who DSC is NOT for
+Move readers toward conscious opt-in
+For each email provide:
+Subject line
+Core insight
+Objection addressed
+Call to action
+Tone: intelligent, calm, selective.
+---
+STAGE 4 — CREATE THE QUALIFICATION FILTER
+Design an 8–10 question qualification form that reveals:
+Whether someone has built or carried real responsibility
+Whether they seek architecture or validation
+Their relationship to power, money, identity, governance
+Their timeline and commitment level
+Their tolerance for ambiguity and long-horizon thinking
+For each question include:
+What indicates a strong fit
+What indicates misalignment
+What indicates they are too early
+Questions must feel reflective and valuable, not interrogative.
+---
+STAGE 5 — AUTOMATED FOLLOW-UP SYSTEM
+Design automated follow-up sequences for:
+1. Leads who consumed content but did not engage
+2. People who started but did not complete the qualification process
+3. Qualified leads who paused before committing
+For each sequence include:
+Timing schedule
+Message angle
+One clarifying insight per touchpoint
+CTA that reinforces sovereignty and choice
+Tone: calm, non-pushy, high-signal.
+---
+FINAL REQUIREMENTS
+Throughout all outputs:
+Prioritize alignment over scale
+Use clear language over mysticism
+Avoid urgency manipulation
+Preserve agency and sovereignty
+Filter aggressively
+End by summarizing the funnel as a single coherent system flow.
+---
+Paste this into ChatGPT and execute sequentially.
+If you want next, I can:
+• Convert this into a Notion-ready template
+• Convert it into a founder-safe investor funnel
+• Strip it to a hyper-compressed execution version
+• Or generate the actual Stage 1 output immediately
+Direction?
+
