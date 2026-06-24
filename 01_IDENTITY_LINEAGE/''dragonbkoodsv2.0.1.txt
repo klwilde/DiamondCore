@@ -1,5 +1,5 @@
 ﻿Alright, let’s **upgrade** the experience by adding some **animations, sound effects, and a countdown timer** before the gate “closes.” This will create a **more immersive** and dramatic login experience.
----
+---Assume the background project have made 
 ### **🔹 Features in This Version**
 ✔ **Dragon Roar Sound Effect** when submitting the password.  
 ✔ **Glowing Text & Button Animation** for a more mystical feel.  
@@ -192,3 +192,5 @@ Want to **hack it manually?**
 - **Or, inspect the HTML page** and change the `window.location.href` manually.
 ---
 🔥 **This is now a fully immersive experience, complete with fire, sound, and a timed challenge!** Let me know if you want **any more wild effects** (e.g., shaking screen, glitch text, or AI dialogue on failure).
+
+---                 

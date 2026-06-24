@@ -1,0 +1,8 @@
+﻿cmd.exe : '\' is not recognized as an internal or external command,
+At line:1 char:1
++ cmd.exe /c "\"\"C:\Program Files\Google\Chrome\Application\chrome.exe ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ('\' is not reco...ternal command,:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+operable program or batch file.

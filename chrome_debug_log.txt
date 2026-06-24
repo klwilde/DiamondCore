@@ -1,0 +1,14 @@
+﻿chrome.exe : 
+At C:\Users\krist\.gemini\antigravity\brain\d85b942b-b086-4a78-a86f-4b0b025c1d72\scratch\start_chrome_linked.ps1:27 
+char:5
++     & $chromePath --remote-debugging-port=9222 --headless=new --disab ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+DevTools listening on ws://127.0.0.1:9222/devtools/browser/f38a7d88-af71-48cf-aff6-9c261146822c
+[25036:23084:0608/002459.647:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error 
+message: DEPRECATED_ENDPOINT
+Created TensorFlow Lite XNNPACK delegate for CPU.
+[25036:23084:0608/002525.500:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error 
+message: DEPRECATED_ENDPOINT

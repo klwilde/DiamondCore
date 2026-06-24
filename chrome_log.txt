@@ -1,0 +1,32 @@
+﻿chrome.exe : 
+At line:1 char:65
++ ... lyContinue; & 'C:\Program Files\Google\Chrome\Application\chrome.exe' ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+DevTools listening on ws://127.0.0.1:9222/devtools/browser/90d885c1-78ec-4951-9304-ab4ffe9b7671
+Created TensorFlow Lite XNNPACK delegate for CPU.
+[21704:6456:0608/002542.531:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error 
+message: DEPRECATED_ENDPOINT
+[21704:6456:0608/002608.765:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error 
+message: DEPRECATED_ENDPOINT
+[21704:6456:0608/002701.498:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error 
+message: DEPRECATED_ENDPOINT
+[21704:6456:0608/002848.481:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error 
+message: DEPRECATED_ENDPOINT
+[21704:6456:0608/003150.855:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error 
+message: DEPRECATED_ENDPOINT
+[21704:6456:0608/003729.489:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error 
+message: DEPRECATED_ENDPOINT
+[21704:6456:0608/012738.815:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:484] ConnectionHandler failed with 
+net error: -2
+[21704:6456:0608/013908.754:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:484] ConnectionHandler failed with 
+net error: -2
+[21704:19484:0608/024845.133:ERROR:components\device_event_log\device_event_log_impl.cc:202] [02:48:45.128] USB: 
+usb_service_win.cc:108 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: Element not 
+found. (0x490)
+[21704:6456:0608/035234.426:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:484] ConnectionHandler failed with 
+net error: -2
+[21704:6456:0608/042647.457:ERROR:google_apis\gcm\engine\connection_factory_impl.cc:484] ConnectionHandler failed with 
+net error: -2
