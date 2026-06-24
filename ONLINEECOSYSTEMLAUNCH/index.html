@@ -392,7 +392,12 @@
         <section id="plus-one" class="view">
             <div class="card" style="position: relative;">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; gap: 1rem;">
-                    <h2 style="margin: 0; padding-bottom: 0;">Plus One / Haus Da Villa Wilde</h2>
+                    <h2 style="margin: 0; padding-bottom: 0; display: inline-flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                        Plus One / Haus Da Villa Wilde
+                        <span id="connection-status-badge" class="conn-status-badge online">
+                            <span class="conn-dot"></span> Online
+                        </span>
+                    </h2>
                     <button id="settings-toggle-btn" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">⚙ API Settings</button>
                 </div>
                 <p>An intelligent, agent-guided clothing listing engine. Frame your pictures correctly, review suggestions, and auto-list across 5 platforms including live eBay publishing.</p>
@@ -639,7 +644,10 @@
                         <div class="mkt-financial-summary">
                             <div class="financial-card">
                                 <span class="financial-lbl">Suggested Price</span>
-                                <span class="financial-val" id="ebay-price-tag">$0.00</span>
+                                <div style="display: inline-flex; align-items: center;">
+                                    <span class="financial-val" style="margin-right: 0.1rem; font-size: 1.35rem;">$</span>
+                                    <input type="number" step="0.01" class="financial-input" id="ebay-price-input" value="0.00">
+                                </div>
                             </div>
                             <div class="financial-card">
                                 <span class="financial-lbl">Est. eBay Fee (13.25% + $0.30)</span>
@@ -672,7 +680,10 @@
                         <div class="mkt-financial-summary">
                             <div class="financial-card">
                                 <span class="financial-lbl">Suggested Price</span>
-                                <span class="financial-val" id="posh-price-tag">$0.00</span>
+                                <div style="display: inline-flex; align-items: center;">
+                                    <span class="financial-val" style="margin-right: 0.1rem; font-size: 1.35rem;">$</span>
+                                    <input type="number" step="0.01" class="financial-input" id="posh-price-input" value="0.00">
+                                </div>
                             </div>
                             <div class="financial-card">
                                 <span class="financial-lbl">Poshmark Commission (20%)</span>
@@ -702,7 +713,10 @@
                         <div class="mkt-financial-summary">
                             <div class="financial-card">
                                 <span class="financial-lbl">Suggested Price</span>
-                                <span class="financial-val" id="depop-price-tag">$0.00</span>
+                                <div style="display: inline-flex; align-items: center;">
+                                    <span class="financial-val" style="margin-right: 0.1rem; font-size: 1.35rem;">$</span>
+                                    <input type="number" step="0.01" class="financial-input" id="depop-price-input" value="0.00">
+                                </div>
                             </div>
                             <div class="financial-card">
                                 <span class="financial-lbl">Depop Fees (10% + 2.9% transaction)</span>
@@ -732,7 +746,10 @@
                         <div class="mkt-financial-summary">
                             <div class="financial-card">
                                 <span class="financial-lbl">Suggested Price</span>
-                                <span class="financial-val" id="mercari-price-tag">$0.00</span>
+                                <div style="display: inline-flex; align-items: center;">
+                                    <span class="financial-val" style="margin-right: 0.1rem; font-size: 1.35rem;">$</span>
+                                    <input type="number" step="0.01" class="financial-input" id="mercari-price-input" value="0.00">
+                                </div>
                             </div>
                             <div class="financial-card">
                                 <span class="financial-lbl">Mercari Selling Fees (10%)</span>
@@ -762,7 +779,10 @@
                         <div class="mkt-financial-summary">
                             <div class="financial-card">
                                 <span class="financial-lbl">Suggested Price</span>
-                                <span class="financial-val" id="vinted-price-tag">$0.00</span>
+                                <div style="display: inline-flex; align-items: center;">
+                                    <span class="financial-val" style="margin-right: 0.1rem; font-size: 1.35rem;">$</span>
+                                    <input type="number" step="0.01" class="financial-input" id="vinted-price-input" value="0.00">
+                                </div>
                             </div>
                             <div class="financial-card">
                                 <span class="financial-lbl">Vinted Seller Fees (0% Buyer pays)</span>

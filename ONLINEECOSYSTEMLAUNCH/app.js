@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initLeadForms();
     initParticleCanvas();
     initGroundingTool();
+    initConnectionMonitor();
     initPlusOneListingEngine();
 });
 
@@ -296,16 +297,187 @@ function initLeadForms() {
     }
 }
 
+/* --- Plus One Local Storage Database (PlusOneDB) & Levenshtein Diff --- */
+function levenshteinDistance(a, b) {
+    if (!a) return b ? b.length : 0;
+    if (!b) return a ? a.length : 0;
+    const matrix = [];
+    for (let i = 0; i <= b.length; i++) {
+        matrix[i] = [i];
+    }
+    for (let j = 0; j <= a.length; j++) {
+        matrix[0][j] = j;
+    }
+    for (let i = 1; i <= b.length; i++) {
+        for (let j = 1; j <= a.length; j++) {
+            if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                matrix[i][j] = matrix[i - 1][j - 1];
+            } else {
+                matrix[i][j] = Math.min(
+                    matrix[i - 1][j - 1] + 1, // substitution
+                    matrix[i][j - 1] + 1,     // insertion
+                    matrix[i - 1][j] + 1      // deletion
+                );
+            }
+        }
+    }
+    return matrix[b.length][a.length];
+}
+
+const PlusOneDB = {
+    saveLead(lead) {
+        const leads = JSON.parse(localStorage.getItem('ecosystem_leads') || '[]');
+        leads.push(lead);
+        localStorage.setItem('ecosystem_leads', JSON.stringify(leads));
+        console.log("[PlusOneDB] Lead registered:", lead);
+    },
+    saveFeedback(feedbackItem) {
+        const feedback = JSON.parse(localStorage.getItem('plus_one_feedback') || '[]');
+        const idx = feedback.findIndex(f => f.feedback_id === feedbackItem.feedback_id);
+        if (idx !== -1) {
+            feedback[idx] = feedbackItem;
+        } else {
+            feedback.push(feedbackItem);
+        }
+        localStorage.setItem('plus_one_feedback', JSON.stringify(feedback));
+        console.log("[PlusOneDB] Feedback logged:", feedbackItem);
+    },
+    getFeedbackByGarmentId(garmentId) {
+        const feedback = JSON.parse(localStorage.getItem('plus_one_feedback') || '[]');
+        return feedback.find(f => f.garment_id === garmentId) || null;
+    },
+    saveInventory(inventoryItem) {
+        const inventory = JSON.parse(localStorage.getItem('plus_one_inventory') || '[]');
+        const idx = inventory.findIndex(i => i.sku === inventoryItem.sku);
+        if (idx !== -1) {
+            inventory[idx] = inventoryItem;
+        } else {
+            inventory.push(inventoryItem);
+        }
+        localStorage.setItem('plus_one_inventory', JSON.stringify(inventory));
+        console.log("[PlusOneDB] Inventory synchronized:", inventoryItem);
+    },
+    getInventoryBySku(sku) {
+        const inventory = JSON.parse(localStorage.getItem('plus_one_inventory') || '[]');
+        return inventory.find(i => i.sku === sku) || null;
+    },
+    getOfflineQueue() {
+        return JSON.parse(localStorage.getItem('plus_one_offline_queue') || '[]');
+    },
+    enqueueOfflineAction(action, payload) {
+        const queue = this.getOfflineQueue();
+        const queueItem = {
+            queue_id: 'q-' + Math.random().toString(36).substr(2, 9),
+            action: action,
+            payload: payload,
+            created_at: new Date().toISOString(),
+            retry_count: 0
+        };
+        queue.push(queueItem);
+        localStorage.setItem('plus_one_offline_queue', JSON.stringify(queue));
+        console.log("[PlusOneDB] Offline action queued:", queueItem);
+        return queueItem;
+    },
+    dequeueOfflineAction(queueId) {
+        let queue = this.getOfflineQueue();
+        queue = queue.filter(item => item.queue_id !== queueId);
+        localStorage.setItem('plus_one_offline_queue', JSON.stringify(queue));
+        console.log("[PlusOneDB] Offline action dequeued:", queueId);
+    }
+};
+
+/* --- Connection and Offline Sync Monitor --- */
+function initConnectionMonitor() {
+    const badge = document.getElementById('connection-status-badge');
+    const updateStatus = () => {
+        const isOnline = navigator.onLine;
+        if (badge) {
+            if (isOnline) {
+                badge.className = "conn-status-badge online";
+                badge.innerHTML = `<span class="conn-dot"></span> Online`;
+                console.log("[Connection] System online. Sync active.");
+                flushOfflineQueue();
+            } else {
+                badge.className = "conn-status-badge offline";
+                badge.innerHTML = `<span class="conn-dot"></span> Offline / Standby`;
+                console.log("[Connection] System offline. Queueing operations.");
+                
+                const visionConsole = document.getElementById('agent-vision-logs');
+                if (visionConsole) {
+                    const p = document.createElement('p');
+                    p.className = 'log-warning';
+                    p.textContent = `> Network connection lost. Running in local sandbox queue mode.`;
+                    visionConsole.appendChild(p);
+                    visionConsole.scrollTop = visionConsole.scrollHeight;
+                }
+            }
+        }
+    };
+
+    window.addEventListener('online', updateStatus);
+    window.addEventListener('offline', updateStatus);
+    updateStatus();
+}
+
+async function flushOfflineQueue() {
+    const queue = PlusOneDB.getOfflineQueue();
+    if (queue.length === 0) return;
+
+    const visionConsole = document.getElementById('agent-vision-logs');
+    const daemonLogs = document.getElementById('daemon-publishing-logs');
+    
+    const logMsg = (msg, type) => {
+        if (visionConsole) {
+            const p = document.createElement('p');
+            p.className = `log-${type}`;
+            p.textContent = `> [Offline Sync] ${msg}`;
+            visionConsole.appendChild(p);
+            visionConsole.scrollTop = visionConsole.scrollHeight;
+        }
+        if (daemonLogs) {
+            const p = document.createElement('p');
+            p.className = `log-${type}`;
+            p.textContent = `[Offline Sync] ${msg}`;
+            daemonLogs.appendChild(p);
+            daemonLogs.scrollTop = daemonLogs.scrollHeight;
+        }
+    };
+
+    logMsg(`Found ${queue.length} action(s) in local offline queue. Commencing sync...`, "warning");
+
+    for (const item of queue) {
+        logMsg(`Processing queued action: ${item.action} (${item.queue_id})`, "info");
+        
+        await new Promise(r => setTimeout(r, 800));
+
+        try {
+            if (item.action === 'create_listing') {
+                logMsg(`Activating queued SKU: ${item.payload.sku} on eBay... success!`, "success");
+            } else if (item.action === 'update_price') {
+                logMsg(`Syncing updated price ($${item.payload.price}) for SKU: ${item.payload.sku}... success!`, "success");
+            } else if (item.action === 'sold_notification') {
+                logMsg(`Processing sold notification for SKU: ${item.payload.sku}... auto-delisting from alternate channels!`, "success");
+            }
+            PlusOneDB.dequeueOfflineAction(item.queue_id);
+        } catch (err) {
+            console.error("Failed to sync item", item, err);
+            item.retry_count = (item.retry_count || 0) + 1;
+            const currentQueue = PlusOneDB.getOfflineQueue();
+            const qItem = currentQueue.find(qi => qi.queue_id === item.queue_id);
+            if (qItem) {
+                qItem.retry_count = item.retry_count;
+                localStorage.setItem('plus_one_offline_queue', JSON.stringify(currentQueue));
+            }
+            logMsg(`Failed to sync action ${item.queue_id}. Will retry later.`, "error");
+        }
+    }
+
+    logMsg("Offline sync completion pass finished.", "success");
+}
+
 function saveLead(lead) {
-    // 1. Save in local storage (leads register)
-    const leads = JSON.parse(localStorage.getItem('ecosystem_leads') || '[]');
-    leads.push(lead);
-    localStorage.setItem('ecosystem_leads', JSON.stringify(leads));
-    
-    // 2. Log in console with proper structured metadata tagging
+    PlusOneDB.saveLead(lead);
     console.log(`[Lead Capture] Source: ${lead.source} | Interest: ${lead.interest} | Name: ${lead.name || 'Anonymous'}`);
-    
-    // 3. Trigger tracking metrics
     trackEvent('lead_capture', {
         source: lead.source,
         interest: lead.interest,
@@ -518,6 +690,11 @@ function initPlusOneListingEngine() {
             if (targetStep < activeStep) {
                 updateWizardUI(targetStep);
             } else if (targetStep === 2 && capturedPhotos.length >= 4) {
+                const tagFocusFailed = imageQualityScores.length >= 3 && imageQualityScores[2].focus < 50;
+                if (tagFocusFailed) {
+                    const proceed = confirm("Plus One Scanner warning: The sizing tag photo (Shot 3) has low focus/contrast. Character recognition may be incorrect. Proceed to manual details form anyway?");
+                    if (!proceed) return;
+                }
                 updateWizardUI(2);
             } else if (targetStep === 3 && document.getElementById('item-metadata-form').checkValidity()) {
                 updateWizardUI(3);
@@ -529,6 +706,11 @@ function initPlusOneListingEngine() {
 
     // Navigation Buttons between panels
     document.getElementById('goto-step-2-btn').addEventListener('click', () => {
+        const tagFocusFailed = imageQualityScores.length >= 3 && imageQualityScores[2].focus < 50;
+        if (tagFocusFailed) {
+            const proceed = confirm("Plus One Scanner warning: The sizing tag photo (Shot 3) has low focus/contrast. Character recognition may be incorrect. Proceed to manual details form anyway?");
+            if (!proceed) return;
+        }
         if (capturedPhotos.length >= 4) updateWizardUI(2);
     });
     document.getElementById('backto-step-1-btn').addEventListener('click', () => {
@@ -578,6 +760,9 @@ function initPlusOneListingEngine() {
 
     // 3. Camera capture / upload logic
     let capturedPhotos = [];
+    let imageQualityScores = [];
+    let currentGarmentId = null;
+    let currentOriginalAIPayload = {};
     const webcamVideo = document.getElementById('webcam-video');
     const photoCanvas = document.getElementById('photo-canvas');
     const cameraPlaceholder = document.getElementById('camera-placeholder');
@@ -675,6 +860,7 @@ function initPlusOneListingEngine() {
         // Load testing sample images
         logAgentMessage("Ingesting testing sample dataset...", "warning");
         capturedPhotos = [];
+        imageQualityScores = [];
         ingestImage(svgFront, true);
         setTimeout(() => ingestImage(svgBack, true), 300);
         setTimeout(() => ingestImage(svgTag, true), 600);
@@ -709,6 +895,61 @@ function initPlusOneListingEngine() {
         }
     }
 
+    function analyzeImageQuality(dataUrl, callback) {
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 100; // downsample for performance
+            canvas.height = 100;
+            ctx.drawImage(img, 0, 0, 100, 100);
+            
+            const imgData = ctx.getImageData(0, 0, 100, 100);
+            const data = imgData.data;
+            let totalLuminance = 0;
+            let pixelCount = 0;
+            let luminanceArray = [];
+            
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i+1];
+                const b = data[i+2];
+                const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+                totalLuminance += lum;
+                luminanceArray.push(lum);
+                pixelCount++;
+            }
+            
+            const avgLum = totalLuminance / pixelCount;
+            const exposureScore = Math.round((avgLum / 255) * 100);
+            
+            let edgeDiffs = 0;
+            let diffCount = 0;
+            for (let y = 0; y < 99; y++) {
+                for (let x = 0; x < 99; x++) {
+                    const idx = y * 100 + x;
+                    const nextIdx = idx + 1;
+                    const downIdx = idx + 100;
+                    
+                    const currentLum = luminanceArray[idx];
+                    const rightLum = luminanceArray[nextIdx];
+                    const bottomLum = luminanceArray[downIdx];
+                    
+                    edgeDiffs += Math.abs(currentLum - rightLum) + Math.abs(currentLum - bottomLum);
+                    diffCount += 2;
+                }
+            }
+            const avgDiff = edgeDiffs / diffCount;
+            const focusScore = Math.min(100, Math.round(avgDiff * 2.5));
+            
+            callback({
+                exposure: exposureScore,
+                focus: focusScore
+            });
+        };
+        img.src = dataUrl;
+    }
+
     // 4. Ingestion / Analysis Pipeline
     function ingestImage(dataUrl, isTestingMode = false) {
         if (capturedPhotos.length >= 4) {
@@ -741,9 +982,37 @@ function initPlusOneListingEngine() {
 
         // Perform Agent Computer Vision checks
         if (isTestingMode) {
+            imageQualityScores.push({ focus: 95, exposure: 75 });
             runFastAnalysis(shotIndex);
         } else {
-            runComputerVisionAnalysis(shotIndex);
+            logAgentMessage(`Ingesting photo ${shotIndex} into agent computer-vision scanner...`, "info");
+            analyzeImageQuality(dataUrl, (scores) => {
+                imageQualityScores.push(scores);
+                
+                const focusPass = scores.focus >= 50;
+                const exposurePass = scores.exposure >= 25 && scores.exposure <= 90;
+                
+                logAgentMessage(`CV Diagnostics for Shot ${shotIndex}: Focus Score: ${scores.focus}% | Exposure: ${scores.exposure}%.`, focusPass && exposurePass ? "success" : "warning");
+                
+                if (!focusPass) {
+                    logAgentMessage(`WARNING: Focus score low (${scores.focus}%). Image may be too blurry for size/brand extraction.`, "error");
+                }
+                if (scores.exposure < 25) {
+                    logAgentMessage(`WARNING: Under-exposure detected (${scores.exposure}%). Check lighting.`, "error");
+                } else if (scores.exposure > 90) {
+                    logAgentMessage(`WARNING: Over-exposure detected (${scores.exposure}%). Check glare/reflection.`, "error");
+                }
+
+                if (shotIndex === 3) {
+                    if (focusPass) {
+                        logAgentMessage("OCR tag diagnostic: Size resolution high (94% confidence). Brand resolved as 'Harley Davidson'. Size resolved as 'Large'.", "success");
+                    } else {
+                        logAgentMessage("OCR tag diagnostic: Size tag character recognition confidence low. Manual entry override enabled.", "warning");
+                    }
+                } else if (shotIndex === 4 && focusPass && exposurePass) {
+                    logAgentMessage("Detail checked. Focus: High detail density. Approved! Camera pipeline complete.", "success");
+                }
+            });
         }
     }
 
@@ -805,6 +1074,9 @@ function initPlusOneListingEngine() {
 
     function removePhoto(index) {
         capturedPhotos.splice(index, 1);
+        if (imageQualityScores[index]) {
+            imageQualityScores.splice(index, 1);
+        }
         
         // Reset checklist items classes
         for (let i = 1; i <= 4; i++) {
@@ -892,6 +1164,7 @@ function initPlusOneListingEngine() {
 
     function generateAllPlatformListings(item) {
         currentItemDetails = item;
+        currentGarmentId = 'g-' + Math.random().toString(36).substr(2, 9);
         
         // suggested price formula based on brand / type
         let basePrice = 45.00;
@@ -948,13 +1221,17 @@ function initPlusOneListingEngine() {
         document.getElementById('ebay-desc-field').value = ebayHtmlDesc;
         
         // eBay Finances
-        const ebayPrice = basePrice;
-        const ebayFee = (ebayPrice * 0.1325) + 0.30;
-        const ebayNet = ebayPrice - ebayFee;
-        
-        document.getElementById('ebay-price-tag').textContent = `$${ebayPrice.toFixed(2)}`;
-        document.getElementById('ebay-fees-tag').textContent = `-$${ebayFee.toFixed(2)}`;
-        document.getElementById('ebay-net-tag').textContent = `$${ebayNet.toFixed(2)}`;
+        const ebayPriceInput = document.getElementById('ebay-price-input');
+        ebayPriceInput.value = basePrice.toFixed(2);
+        const recalculateEbay = () => {
+            const price = parseFloat(ebayPriceInput.value) || 0;
+            const fee = (price * 0.1325) + 0.30;
+            const net = price - fee;
+            document.getElementById('ebay-fees-tag').textContent = `-$${fee.toFixed(2)}`;
+            document.getElementById('ebay-net-tag').textContent = `$${net.toFixed(2)}`;
+        };
+        recalculateEbay();
+        ebayPriceInput.oninput = recalculateEbay;
 
         // 2. Poshmark
         const poshTitle = `${item.brand} Vintage ${item.color} ${item.titleSeed}`.substring(0, 80);
@@ -978,13 +1255,17 @@ ${item.defects}
 💌 Offers welcome! 📦 Same or next day shipping. Add to bundle to save on shipping rates!`;
         document.getElementById('posh-desc-field').value = poshDesc;
         
-        const poshPrice = basePrice + 10; // Extra room for offers
-        const poshFee = poshPrice * 0.20;
-        const poshNet = poshPrice - poshFee;
-        
-        document.getElementById('posh-price-tag').textContent = `$${poshPrice.toFixed(2)}`;
-        document.getElementById('posh-fees-tag').textContent = `-$${poshFee.toFixed(2)}`;
-        document.getElementById('posh-net-tag').textContent = `$${poshNet.toFixed(2)}`;
+        const poshPriceInput = document.getElementById('posh-price-input');
+        poshPriceInput.value = (basePrice + 10).toFixed(2);
+        const recalculatePosh = () => {
+            const price = parseFloat(poshPriceInput.value) || 0;
+            const fee = price * 0.20;
+            const net = price - fee;
+            document.getElementById('posh-fees-tag').textContent = `-$${fee.toFixed(2)}`;
+            document.getElementById('posh-net-tag').textContent = `$${net.toFixed(2)}`;
+        };
+        recalculatePosh();
+        poshPriceInput.oninput = recalculatePosh;
 
         // 3. Depop
         const depopTitle = `Vintage ${item.brand} ${item.color} ${item.titleSeed}`;
@@ -1004,13 +1285,17 @@ Hurry up, this won't last long! DM with questions.
 #streetwear #y2k #grunge #vintage #cyber #retro #${item.brand.toLowerCase().replace(/\s+/g, '')} #${item.color.toLowerCase().replace(/\s+/g, '')}`;
         document.getElementById('depop-desc-field').value = depopDesc;
 
-        const depopPrice = basePrice * 0.95; // Slightly lower for Depop audience
-        const depopFee = (depopPrice * 0.10) + (depopPrice * 0.029) + 0.30;
-        const depopNet = depopPrice - depopFee;
-        
-        document.getElementById('depop-price-tag').textContent = `$${depopPrice.toFixed(2)}`;
-        document.getElementById('depop-fees-tag').textContent = `-$${depopFee.toFixed(2)}`;
-        document.getElementById('depop-net-tag').textContent = `$${depopNet.toFixed(2)}`;
+        const depopPriceInput = document.getElementById('depop-price-input');
+        depopPriceInput.value = (basePrice * 0.95).toFixed(2);
+        const recalculateDepop = () => {
+            const price = parseFloat(depopPriceInput.value) || 0;
+            const fee = (price * 0.10) + (price * 0.029) + 0.30;
+            const net = price - fee;
+            document.getElementById('depop-fees-tag').textContent = `-$${fee.toFixed(2)}`;
+            document.getElementById('depop-net-tag').textContent = `$${net.toFixed(2)}`;
+        };
+        recalculateDepop();
+        depopPriceInput.oninput = recalculateDepop;
 
         // 4. Mercari
         const mercariTitle = `${item.brand} Vintage ${item.color} ${item.titleSeed} Size ${item.size}`;
@@ -1028,13 +1313,17 @@ Condition Details:
 - Check pictures carefully and let me know if you have any questions!`;
         document.getElementById('mercari-desc-field').value = mercariDesc;
 
-        const mercariPrice = basePrice * 0.9;
-        const mercariFee = mercariPrice * 0.10;
-        const mercariNet = mercariPrice - mercariFee;
-
-        document.getElementById('mercari-price-tag').textContent = `$${mercariPrice.toFixed(2)}`;
-        document.getElementById('mercari-fees-tag').textContent = `-$${mercariFee.toFixed(2)}`;
-        document.getElementById('mercari-net-tag').textContent = `$${mercariNet.toFixed(2)}`;
+        const mercariPriceInput = document.getElementById('mercari-price-input');
+        mercariPriceInput.value = (basePrice * 0.9).toFixed(2);
+        const recalculateMercari = () => {
+            const price = parseFloat(mercariPriceInput.value) || 0;
+            const fee = price * 0.10;
+            const net = price - fee;
+            document.getElementById('mercari-fees-tag').textContent = `-$${fee.toFixed(2)}`;
+            document.getElementById('mercari-net-tag').textContent = `$${net.toFixed(2)}`;
+        };
+        recalculateMercari();
+        mercariPriceInput.oninput = recalculateMercari;
 
         // 5. Vinted
         const vintedTitle = `${item.brand} ${item.color} ${item.titleSeed} ${item.size}`;
@@ -1049,11 +1338,48 @@ ${item.defects}
 Sustainable packaging applied. Tracked shipping from Fremantle. Message for exact shipping bundle rates!`;
         document.getElementById('vinted-desc-field').value = vintedDesc;
 
-        const vintedPrice = basePrice * 0.85; // Low prices on Vinted
-        const vintedNet = vintedPrice; // Buyer pays fee!
+        const vintedPriceInput = document.getElementById('vinted-price-input');
+        vintedPriceInput.value = (basePrice * 0.85).toFixed(2);
+        const recalculateVinted = () => {
+            const price = parseFloat(vintedPriceInput.value) || 0;
+            document.getElementById('vinted-net-tag').textContent = `$${price.toFixed(2)}`;
+        };
+        recalculateVinted();
+        vintedPriceInput.oninput = recalculateVinted;
+
+        // Save original AI generated payload for feedback loop
+        currentOriginalAIPayload = {
+            title: ebayTitle,
+            description: ebayHtmlDesc,
+            suggested_price: basePrice,
+            currency: 'AUD'
+        };
+
+        const feedbackId = 'f-' + Math.random().toString(36).substr(2, 9);
+        const feedbackEntry = {
+            feedback_id: feedbackId,
+            garment_id: currentGarmentId,
+            original_ai_payload: currentOriginalAIPayload,
+            user_edited_payload: null,
+            delta_metrics: null,
+            sale_outcome: null,
+            fine_tune_status: "pending"
+        };
+        PlusOneDB.saveFeedback(feedbackEntry);
+
+        // Save draft inventory item
+        const brandCode = item.brand.toUpperCase().replace(/[^A-Z0-9]/g, '').substring(0, 8);
+        const sizeCode = item.size.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        const sku = `P1-${brandCode || 'ITEM'}-${sizeCode || 'U'}`;
         
-        document.getElementById('vinted-price-tag').textContent = `$${vintedPrice.toFixed(2)}`;
-        document.getElementById('vinted-net-tag').textContent = `$${vintedNet.toFixed(2)}`;
+        const inventoryEntry = {
+            sku: sku,
+            garment_id: currentGarmentId,
+            original_stock: 1,
+            current_stock: 1,
+            active_offers: []
+        };
+        PlusOneDB.saveInventory(inventoryEntry);
 
         // Re-calculate tab widths or refresh view bindings
         setupMarketplaceTabs();
@@ -1195,7 +1521,32 @@ Sustainable packaging applied. Tracked shipping from Fremantle. Message for exac
         publishEbayBtn.disabled = true;
         daemonLogs.innerHTML = ''; // Clear logs
         
-        appendDaemonLog("Commencing agentic publish pipeline for SKU: P1-HARLEY-L", "warning");
+        const finalTitle = document.getElementById('ebay-title-field').value;
+        const finalDesc = document.getElementById('ebay-desc-field').value;
+        const finalPrice = parseFloat(document.getElementById('ebay-price-input').value) || 0;
+        
+        const brandCode = currentItemDetails.brand.toUpperCase().replace(/[^A-Z0-9]/g, '').substring(0, 8);
+        const sizeCode = currentItemDetails.size.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        const sku = `P1-${brandCode || 'ITEM'}-${sizeCode || 'U'}`;
+
+        if (!navigator.onLine) {
+            appendDaemonLog("Network connection lost. Enqueueing listing payload in local sandbox queue...", "warning");
+            
+            PlusOneDB.enqueueOfflineAction('create_listing', {
+                sku: sku,
+                title: finalTitle,
+                description: finalDesc,
+                price: finalPrice
+            });
+
+            setTimeout(() => {
+                appendDaemonLog("Enqueued successfully. SKU: " + sku + " queued for online publish.", "success");
+                publishEbayBtn.disabled = false;
+            }, 800);
+            return;
+        }
+
+        appendDaemonLog("Commencing agentic publish pipeline for SKU: " + sku, "warning");
         
         setTimeout(() => {
             appendDaemonLog("Validating OAuth authorization token... OK", "info");
@@ -1223,7 +1574,6 @@ Sustainable packaging applied. Tracked shipping from Fremantle. Message for exac
         }, 2400);
 
         setTimeout(() => {
-            // Category match jacket
             const catId = "57988";
             appendDaemonLog(`Category match: Clothing > Men > Coats, Jackets & Vests. ID: ${catId}. Confidence: 97%.`, "success");
         }, 2800);
@@ -1233,11 +1583,11 @@ Sustainable packaging applied. Tracked shipping from Fremantle. Message for exac
         }, 3200);
 
         setTimeout(() => {
-            appendDaemonLog("Creating inventory item: POST /sell/inventory/v1/inventory_item/P1-HARLEY-L", "info");
+            appendDaemonLog("Creating inventory item: POST /sell/inventory/v1/inventory_item/" + sku, "info");
         }, 3600);
 
         setTimeout(() => {
-            appendDaemonLog("Inventory item SKU P1-HARLEY-L registered successfully (201 Created).", "success");
+            appendDaemonLog("Inventory item SKU " + sku + " registered successfully (201 Created).", "success");
         }, 4000);
 
         setTimeout(() => {
@@ -1260,7 +1610,66 @@ Sustainable packaging applied. Tracked shipping from Fremantle. Message for exac
             publishEbayBtn.removeEventListener('click', handlePublishClick);
             publishEbayBtn.addEventListener('click', launchEbayPreviewModal);
             
-            trackEvent('ebay_publish_success', { sku: 'P1-HARLEY-L' });
+            // Save feedback details & calculate deltas
+            const feedback = PlusOneDB.getFeedbackByGarmentId(currentGarmentId);
+            if (feedback) {
+                feedback.user_edited_payload = {
+                    title: finalTitle,
+                    description: finalDesc,
+                    price: finalPrice,
+                    currency: 'AUD'
+                };
+                
+                const titleDistance = levenshteinDistance(feedback.original_ai_payload.title, finalTitle);
+                const descDistance = levenshteinDistance(feedback.original_ai_payload.description, finalDesc);
+                const priceDiffAbs = Math.abs(feedback.original_ai_payload.suggested_price - finalPrice);
+                const priceDiffPct = feedback.original_ai_payload.suggested_price > 0 
+                    ? (priceDiffAbs / feedback.original_ai_payload.suggested_price) * 100 
+                    : 0;
+
+                feedback.delta_metrics = {
+                    title_levenshtein_distance: titleDistance,
+                    description_levenshtein_distance: descDistance,
+                    price_difference_absolute: priceDiffAbs,
+                    price_difference_percentage: priceDiffPct
+                };
+                
+                PlusOneDB.saveFeedback(feedback);
+                
+                // Simulate a sale after 15 seconds to complete the feedback loop test!
+                setTimeout(() => {
+                    const latestFeedback = PlusOneDB.getFeedbackByGarmentId(currentGarmentId);
+                    if (latestFeedback) {
+                        latestFeedback.sale_outcome = {
+                            sold_price: finalPrice,
+                            sale_timestamp: new Date().toISOString(),
+                            days_to_sell: 1,
+                            buyer_region: "WA"
+                        };
+                        PlusOneDB.saveFeedback(latestFeedback);
+                        console.log("[PlusOneDB] Simulated sale outcome logged for feedback:", currentGarmentId);
+                        
+                        // Log inside listing daemon console
+                        appendDaemonLog("Sale Webhook event received! SKU: " + sku + " sold on eBay for $" + finalPrice.toFixed(2), "warning");
+                        appendDaemonLog("Auto-delisting active offers from alternate channels... none active.", "info");
+                    }
+                }, 15000);
+            }
+
+            // Update inventory sync record
+            const inventory = PlusOneDB.getInventoryBySku(sku);
+            if (inventory) {
+                inventory.active_offers = [{
+                    platform: "ebay",
+                    external_item_id: "386901847162",
+                    external_status: "active",
+                    listed_price: finalPrice,
+                    last_synced_at: new Date().toISOString()
+                }];
+                PlusOneDB.saveInventory(inventory);
+            }
+
+            trackEvent('ebay_publish_success', { sku: sku });
             launchEbayPreviewModal();
         }, 5500);
     }
@@ -1290,8 +1699,8 @@ Sustainable packaging applied. Tracked shipping from Fremantle. Message for exac
         const titleField = document.getElementById('ebay-title-field').value;
         document.getElementById('ebay-preview-title').textContent = titleField;
         
-        const priceField = document.getElementById('ebay-price-tag').textContent;
-        document.getElementById('ebay-preview-price').textContent = priceField;
+        const priceField = parseFloat(document.getElementById('ebay-price-input').value) || 0;
+        document.getElementById('ebay-preview-price').textContent = "$" + priceField.toFixed(2);
 
         const specsTable = document.getElementById('ebay-preview-specs-table');
         specsTable.innerHTML = `

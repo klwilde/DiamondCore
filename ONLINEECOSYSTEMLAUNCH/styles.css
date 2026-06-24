@@ -1317,3 +1317,61 @@ select.form-control {
         text-align: left;
     }
 }
+
+/* --- Plus One New Elements (Sprint 1) --- */
+.financial-input {
+    font-size: 1.35rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    background: transparent;
+    border: none;
+    border-bottom: 2px dashed rgba(255,255,255,0.15);
+    width: 90px;
+    text-align: left;
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+.financial-input:focus {
+    border-bottom-color: var(--gem-diamond);
+}
+.financial-input::-webkit-outer-spin-button,
+.financial-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.financial-input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.conn-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+    background-color: rgba(16, 185, 129, 0.08);
+    color: var(--gem-emerald);
+    border: 1px solid rgba(16, 185, 129, 0.15);
+    transition: all 0.3s ease;
+    vertical-align: middle;
+}
+.conn-status-badge.offline {
+    background-color: rgba(239, 68, 68, 0.08);
+    color: var(--gem-ruby);
+    border: 1px solid rgba(239, 68, 68, 0.15);
+}
+.conn-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--gem-emerald);
+    box-shadow: 0 0 8px var(--gem-emerald);
+}
+.conn-status-badge.offline .conn-dot {
+    background-color: var(--gem-ruby);
+    box-shadow: 0 0 8px var(--gem-ruby);
+}
+
