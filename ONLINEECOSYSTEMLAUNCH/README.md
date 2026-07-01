@@ -40,13 +40,36 @@ ONLINEECOSYSTEMLAUNCH/
 
 ## Getting Started
 
+### Installation & Configuration
+
+1. Clone or download the repository to your local machine.
+2. Open a terminal inside the project directory (`ONLINEECOSYSTEMLAUNCH`) and install node dependencies:
+   ```bash
+   npm install
+   ```
+3. (Optional) Create a `.env` file in the project root folder to configure your eBay developer keys:
+   ```env
+   PORT=8000
+   EBAY_ENV=sandbox
+   EBAY_CLIENT_ID=your-ebay-app-client-id
+   EBAY_CLIENT_SECRET=your-ebay-app-client-secret
+   EBAY_REDIRECT_URI=http://localhost:8000/api/ebay/callback
+   ```
+
 ### Running the Application
 
-To preview and interact with the application on your local machine:
-1. Open the [index.html](file:///c:/Users/krist/.gemini/antigravity/scratch/Diamondcore/ONLINEECOSYSTEMLAUNCH/index.html) file directly in your default web browser.
-2. Select **Plus One** from the navigation menu or click **Launch Listing Assistant** on the **Portfolio** tab dashboard.
-3. Click the **Load Sample Clothes (Testing Mode)** button to run through the photography, listing generation, OAuth login, and eBay posting flow.
+1. Start the local server:
+   ```bash
+   npm start
+   ```
+2. Open your default web browser and navigate to:
+   ```
+   http://localhost:8000
+   ```
+3. Select **Plus One** from the navigation header or click **Launch Listing Assistant** on the Portfolio dashboard.
+4. Set up your listings and publish them securely.
 
 ## Maintainer
 Haus da Villa Wilde  
 Walyalup / Fremantle, Western Australia
+

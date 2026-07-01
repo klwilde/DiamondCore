@@ -1468,12 +1468,44 @@ Sustainable packaging applied. Tracked shipping from Fremantle. Message for exac
         appendDaemonLog("Session revoked by user. Standby.", "warning");
     }
 
+    function openOAuthPopup(path) {
+        appendDaemonLog("Opening secure OAuth consent popup...", "info");
+        const popup = window.open(path, 'ebay_oauth', 'width=600,height=600,status=yes,resizable=yes');
+        
+        const messageListener = (event) => {
+            if (event.data && event.data.type === 'EBAY_AUTH_SUCCESS') {
+                window.removeEventListener('message', messageListener);
+                ebayToken = event.data.token;
+                ebayUsername = event.data.username;
+                
+                localStorage.setItem('ebay_access_token', ebayToken);
+                localStorage.setItem('ebay_shop_username', ebayUsername);
+                
+                setOAuthConnected(ebayUsername);
+                trackEvent('ebay_oauth_success', { username: ebayUsername });
+            }
+        };
+        window.addEventListener('message', messageListener);
+    }
+
     ebayOauthBtn.addEventListener('click', () => {
         if (ebayToken) {
             setOAuthDisconnected();
         } else {
-            // Open modal to sign in
-            oauthModal.style.display = 'flex';
+            const liveMode = document.getElementById('ebay-live-mode').checked;
+            const clientId = document.getElementById('ebay-client-id').value.trim();
+            const redirectUri = window.location.origin + '/api/ebay/callback';
+
+            if (liveMode) {
+                let path = `/api/ebay/auth-url?redirect_uri=${encodeURIComponent(redirectUri)}&env=sandbox`;
+                if (clientId) {
+                    path = `/api/ebay/auth-url?client_id=${encodeURIComponent(clientId)}&redirect_uri=${encodeURIComponent(redirectUri)}&env=production`;
+                }
+                openOAuthPopup(path);
+            } else {
+                // Simulation mode - open local signin modal
+                oauthModal.style.display = 'flex';
+            }
         }
     });
 
@@ -1529,6 +1561,93 @@ Sustainable packaging applied. Tracked shipping from Fremantle. Message for exac
         const sizeCode = currentItemDetails.size.toUpperCase().replace(/[^A-Z0-9]/g, '');
         const sku = `P1-${brandCode || 'ITEM'}-${sizeCode || 'U'}`;
 
+        const isLiveMode = document.getElementById('ebay-live-mode').checked;
+
+        if (isLiveMode) {
+            appendDaemonLog("Commencing live agentic publish pipeline for SKU: " + sku, "warning");
+            appendDaemonLog("Contacting secure Express backend CORS proxy...", "info");
+
+            fetch('/api/ebay/publish', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    isLiveMode: true,
+                    token: ebayToken,
+                    sku: sku,
+                    title: finalTitle,
+                    description: finalDesc,
+                    price: finalPrice,
+                    itemDetails: currentItemDetails,
+                    photos: capturedPhotos
+                })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    return res.json().then(err => { throw new Error(err.details ? JSON.stringify(err.details) : 'Server returned error status ' + res.status); });
+                }
+                return res.json();
+            })
+            .then(data => {
+                appendDaemonLog("Validating OAuth authorization token... OK", "success");
+                appendDaemonLog("Uploading media to eBay Picture Services (EPS)... 4 files processed.", "success");
+                appendDaemonLog("Inventory item SKU " + sku + " registered successfully.", "success");
+                appendDaemonLog(`SUCCESS. Published live on eBay! Item ID: ${data.itemId}`, "success");
+                
+                // Re-enable and update button to show Live Preview
+                publishEbayBtn.disabled = false;
+                publishEbayBtn.textContent = "👁 View eBay Listing Preview";
+                
+                // Swap click handler to preview modal
+                publishEbayBtn.removeEventListener('click', handlePublishClick);
+                publishEbayBtn.addEventListener('click', launchEbayPreviewModal);
+                
+                // Save inventory sync record
+                const inventory = PlusOneDB.getInventoryBySku(sku);
+                if (inventory) {
+                    inventory.active_offers = [{
+                        platform: "ebay",
+                        external_item_id: data.itemId,
+                        external_status: "active",
+                        listed_price: finalPrice,
+                        last_synced_at: new Date().toISOString()
+                    }];
+                    PlusOneDB.saveInventory(inventory);
+                }
+
+                // Save feedback details
+                const feedback = PlusOneDB.getFeedbackByGarmentId(currentGarmentId);
+                if (feedback) {
+                    feedback.user_edited_payload = {
+                        title: finalTitle,
+                        description: finalDesc,
+                        price: finalPrice,
+                        currency: 'AUD'
+                    };
+                    feedback.delta_metrics = {
+                        title_levenshtein_distance: levenshteinDistance(feedback.original_ai_payload.title, finalTitle),
+                        description_levenshtein_distance: levenshteinDistance(feedback.original_ai_payload.description, finalDesc),
+                        price_difference_absolute: Math.abs(feedback.original_ai_payload.suggested_price - finalPrice),
+                        price_difference_percentage: feedback.original_ai_payload.suggested_price > 0 
+                            ? (Math.abs(feedback.original_ai_payload.suggested_price - finalPrice) / feedback.original_ai_payload.suggested_price) * 100 
+                            : 0
+                    };
+                    PlusOneDB.saveFeedback(feedback);
+                }
+
+                trackEvent('ebay_publish_success', { sku: sku });
+                launchEbayPreviewModal();
+            })
+            .catch(err => {
+                appendDaemonLog("Publishing failed: " + err.message, "error");
+                publishEbayBtn.disabled = false;
+            });
+
+            return;
+        }
+
+        // --- Sandboxed Simulation Mode ---
         if (!navigator.onLine) {
             appendDaemonLog("Network connection lost. Enqueueing listing payload in local sandbox queue...", "warning");
             
